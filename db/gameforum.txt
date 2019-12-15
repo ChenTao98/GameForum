@@ -1,0 +1,14 @@
+DROP DATABASE IF EXISTS `game_forum`;
+CREATE DATABASE `game_forum`;
+CREATE TABLE `game_forum`.`user` ( `id` INT NOT NULL AUTO_INCREMENT , `user` VARCHAR(255) NOT NULL , `phonenum` VARCHAR(11) NOT NULL , `email` VARCHAR(255) NOT NULL , `password` VARCHAR(255) NOT NULL , `headpic` INT(255) NOT NULL , `addone` INT NULL , `addtwo` VARCHAR(255) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`games` ( `id` INT NOT NULL AUTO_INCREMENT , `url` VARCHAR(255) NOT NULL , `gamename` VARCHAR(255) NOT NULL , `icon` VARCHAR(255) NOT NULL , `introducton` VARCHAR(1023) NOT NULL , `help` VARCHAR(1023) NOT NULL , `addone` INT NULL , `addtwo` VARCHAR(255) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`posts` ( `id` INT NOT NULL AUTO_INCREMENT , `url` VARCHAR(255) NOT NULL , `topic` VARCHAR(255) NOT NULL , `time` DATETIME NOT NULL , `content` VARCHAR(1023) NOT NULL , `replynum` INT NOT NULL DEFAULT '0' , `addone` INT NULL , `addtwo` VARCHAR(255) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`userPraiseMsg` ( `userid` INT NOT NULL , `messageid` INT NOT NULL ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`gameRelatePosts` ( `gameid` INT NOT NULL , `postid` INT NOT NULL ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`userplaysgames` ( `id` INT NOT NULL AUTO_INCREMENT , `userid` INT NOT NULL , `gameid` INT NOT NULL , `lastplaytime` INT NOT NULL , `addone` INT NULL , `addtwo` VARCHAR(255) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`userfollowposts` ( `postid` INT NOT NULL , `userid` INT NOT NULL ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`usersendposts` ( `postid` INT NOT NULL , `userid` INT NOT NULL ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`userpraiseposts` ( `userid` INT NOT NULL , `postid` INT NOT NULL ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`message` ( `id` INT NOT NULL AUTO_INCREMENT , `userid` INT NOT NULL , `postid` INT NOT NULL , `time` DATETIME NOT NULL , `messageContent` VARCHAR(1023) NOT NULL , `addone` INT NULL , `addtwo` VARCHAR(255) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `game_forum`.`reply` ( `id` INT NOT NULL AUTO_INCREMENT , `messageid` INT NOT NULL , `replyId` INT NOT NULL , `time` DATETIME NULL , `replycontent` VARCHAR(1023) NULL , `addone` INT NULL , `addtwo` VARCHAR(255) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
