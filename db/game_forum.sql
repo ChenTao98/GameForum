@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2019-12-15 07:31:40
+-- 生成日期： 2019-12-15 14:11:29
 -- 服务器版本： 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -107,11 +107,11 @@ CREATE TABLE `reply` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `user` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `phonenum` varchar(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `headpic` int(255) NOT NULL,
+  `headpic` varchar(255) NOT NULL,
   `addone` int(11) DEFAULT NULL,
   `addtwo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

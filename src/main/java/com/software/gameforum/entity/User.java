@@ -1,5 +1,7 @@
 package com.software.gameforum.entity;
 
+import com.software.gameforum.utils.PathUtils;
+
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     private Integer id;
 
-    private String user;
+    private String username;
 
     private String phonenum;
 
@@ -17,12 +19,21 @@ public class User implements Serializable {
 
     private String password;
 
-    private Integer headpic;
+    private String headpic;
 
     private Integer addone;
 
     private String addtwo;
+    public User() {
+    }
 
+    public User(String username, String phonenum, String email, String password) {
+        this.username = username;
+        this.phonenum = phonenum;
+        this.email = email;
+        this.password = password;
+        this.headpic=PathUtils.DEFAULT_IMAGE_NAME;
+    }
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -33,12 +44,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPhonenum() {
@@ -65,11 +76,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Integer getHeadpic() {
+    public String getHeadpic() {
         return headpic;
     }
 
-    public void setHeadpic(Integer headpic) {
+    public void setHeadpic(String headpic) {
         this.headpic = headpic;
     }
 
@@ -102,7 +113,7 @@ public class User implements Serializable {
         }
         User other = (User) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUser() == null ? other.getUser() == null : this.getUser().equals(other.getUser()))
+            && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
             && (this.getPhonenum() == null ? other.getPhonenum() == null : this.getPhonenum().equals(other.getPhonenum()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
@@ -116,7 +127,7 @@ public class User implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUser() == null) ? 0 : getUser().hashCode());
+        result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
         result = prime * result + ((getPhonenum() == null) ? 0 : getPhonenum().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
@@ -133,7 +144,7 @@ public class User implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", user=").append(user);
+        sb.append(", username=").append(username);
         sb.append(", phonenum=").append(phonenum);
         sb.append(", email=").append(email);
         sb.append(", password=").append(password);

@@ -3,11 +3,11 @@
 <mapper namespace="com.software.gameforum.dao.UserDao">
   <resultMap id="BaseResultMap" type="com.software.gameforum.entity.User">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user" jdbcType="VARCHAR" property="user" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="phonenum" jdbcType="VARCHAR" property="phonenum" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="headpic" jdbcType="INTEGER" property="headpic" />
+    <result column="headpic" jdbcType="VARCHAR" property="headpic" />
     <result column="addone" jdbcType="INTEGER" property="addone" />
     <result column="addtwo" jdbcType="VARCHAR" property="addtwo" />
   </resultMap>
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `user`, phonenum, email, `password`, headpic, addone, addtwo
+    id, username, phonenum, email, `password`, headpic, addone, addtwo
   </sql>
   <select id="selectByExample" parameterType="com.software.gameforum.entity.UserExample" resultMap="BaseResultMap">
     select
@@ -111,18 +111,18 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.User" useGeneratedKeys="true">
-    insert into user (`user`, phonenum, email, 
+    insert into user (username, phonenum, email, 
       `password`, headpic, addone, 
       addtwo)
-    values (#{user,jdbcType=VARCHAR}, #{phonenum,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{headpic,jdbcType=INTEGER}, #{addone,jdbcType=INTEGER}, 
+    values (#{username,jdbcType=VARCHAR}, #{phonenum,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{headpic,jdbcType=VARCHAR}, #{addone,jdbcType=INTEGER}, 
       #{addtwo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.User" useGeneratedKeys="true">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="user != null">
-        `user`,
+      <if test="username != null">
+        username,
       </if>
       <if test="phonenum != null">
         phonenum,
@@ -144,8 +144,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="user != null">
-        #{user,jdbcType=VARCHAR},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
       <if test="phonenum != null">
         #{phonenum,jdbcType=VARCHAR},
@@ -157,7 +157,7 @@
         #{password,jdbcType=VARCHAR},
       </if>
       <if test="headpic != null">
-        #{headpic,jdbcType=INTEGER},
+        #{headpic,jdbcType=VARCHAR},
       </if>
       <if test="addone != null">
         #{addone,jdbcType=INTEGER},
@@ -179,8 +179,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.user != null">
-        `user` = #{record.user,jdbcType=VARCHAR},
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
       </if>
       <if test="record.phonenum != null">
         phonenum = #{record.phonenum,jdbcType=VARCHAR},
@@ -192,7 +192,7 @@
         `password` = #{record.password,jdbcType=VARCHAR},
       </if>
       <if test="record.headpic != null">
-        headpic = #{record.headpic,jdbcType=INTEGER},
+        headpic = #{record.headpic,jdbcType=VARCHAR},
       </if>
       <if test="record.addone != null">
         addone = #{record.addone,jdbcType=INTEGER},
@@ -208,11 +208,11 @@
   <update id="updateByExample" parameterType="map">
     update user
     set id = #{record.id,jdbcType=INTEGER},
-      `user` = #{record.user,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
       phonenum = #{record.phonenum,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       `password` = #{record.password,jdbcType=VARCHAR},
-      headpic = #{record.headpic,jdbcType=INTEGER},
+      headpic = #{record.headpic,jdbcType=VARCHAR},
       addone = #{record.addone,jdbcType=INTEGER},
       addtwo = #{record.addtwo,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -222,8 +222,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.gameforum.entity.User">
     update user
     <set>
-      <if test="user != null">
-        `user` = #{user,jdbcType=VARCHAR},
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
       </if>
       <if test="phonenum != null">
         phonenum = #{phonenum,jdbcType=VARCHAR},
@@ -235,7 +235,7 @@
         `password` = #{password,jdbcType=VARCHAR},
       </if>
       <if test="headpic != null">
-        headpic = #{headpic,jdbcType=INTEGER},
+        headpic = #{headpic,jdbcType=VARCHAR},
       </if>
       <if test="addone != null">
         addone = #{addone,jdbcType=INTEGER},
@@ -248,11 +248,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.software.gameforum.entity.User">
     update user
-    set `user` = #{user,jdbcType=VARCHAR},
+    set username = #{username,jdbcType=VARCHAR},
       phonenum = #{phonenum,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       `password` = #{password,jdbcType=VARCHAR},
-      headpic = #{headpic,jdbcType=INTEGER},
+      headpic = #{headpic,jdbcType=VARCHAR},
       addone = #{addone,jdbcType=INTEGER},
       addtwo = #{addtwo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
