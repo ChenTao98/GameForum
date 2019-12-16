@@ -1,8 +1,11 @@
 package com.software.gameforum.service.serviceImpl;
 
 import com.software.gameforum.dao.UserDao;
+import com.software.gameforum.dao.UserfollowgamesDao;
 import com.software.gameforum.entity.User;
 import com.software.gameforum.entity.UserExample;
+import com.software.gameforum.entity.Userfollowgames;
+import com.software.gameforum.entity.UserfollowgamesExample;
 import com.software.gameforum.service.UserService;
 import com.software.gameforum.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private UserfollowgamesDao userfollowgamesDao;
 
     @Override
     public int register(User user) {
@@ -58,5 +63,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(int id) {
         return userDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int userFollowGame(Userfollowgames userfollowgames) {
+        UserfollowgamesExample example = new UserfollowgamesExample();
+        example.createCriteria().andUseridEqualTo(userfollowgames.getUserid()).andGameidEqualTo(userfollowgames.getGameid());
+        if (userfollowgamesDao.selectByExample(example).size() == 0) {
+            return userfollowgamesDao.insert(userfollowgames);
+        }
+        return 1;
     }
 }

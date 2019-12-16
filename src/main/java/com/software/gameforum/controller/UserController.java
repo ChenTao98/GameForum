@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.software.gameforum.entity.Games;
 import com.software.gameforum.entity.Posts;
 import com.software.gameforum.entity.User;
+import com.software.gameforum.entity.Userfollowgames;
 import com.software.gameforum.interceptor.UserLoginInterceptor;
 import com.software.gameforum.jsonBean.GameBean;
 import com.software.gameforum.jsonBean.PostBean;
@@ -150,6 +151,22 @@ public class UserController {
             gameForumJSON.setSuccessCode();
         } else {
             gameForumJSON.setErrorCode(1, "数据库出错");
+        }
+        return gameForumJSON.toMyString(true);
+    }
+
+    @PostMapping(value = "followGame", produces = "application/json;charset=UTF-8")
+    public String followGame(HttpServletRequest request, @RequestBody() JSONObject jsonObject) {
+        int userId = getUserByRequest(request).getId();
+        int gameId = jsonObject.getInteger("gameid");
+        Userfollowgames userfollowgames = new Userfollowgames();
+        userfollowgames.setGameid(gameId);
+        userfollowgames.setUserid(userId);
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        if (userService.userFollowGame(userfollowgames) == 1) {
+            gameForumJSON.setSuccessCode();
+        } else {
+            gameForumJSON.setErrorCode(1, "数据库出错，插入失败");
         }
         return gameForumJSON.toMyString(true);
     }
