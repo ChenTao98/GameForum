@@ -22,6 +22,10 @@ public class GameBean {
 
     private Integer postnum;
 
+    private Integer followStatus = 0;
+
+    private Integer praiseStatus = 0;
+
     private List<PostBean> related_posts;
 
     public GameBean() {
