@@ -1,6 +1,7 @@
 package com.software.gameforum.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserplaysgamesExample {
@@ -314,52 +315,52 @@ public class UserplaysgamesExample {
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeEqualTo(Integer value) {
+        public Criteria andLastplaytimeEqualTo(Date value) {
             addCriterion("lastplaytime =", value, "lastplaytime");
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeNotEqualTo(Integer value) {
+        public Criteria andLastplaytimeNotEqualTo(Date value) {
             addCriterion("lastplaytime <>", value, "lastplaytime");
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeGreaterThan(Integer value) {
+        public Criteria andLastplaytimeGreaterThan(Date value) {
             addCriterion("lastplaytime >", value, "lastplaytime");
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andLastplaytimeGreaterThanOrEqualTo(Date value) {
             addCriterion("lastplaytime >=", value, "lastplaytime");
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeLessThan(Integer value) {
+        public Criteria andLastplaytimeLessThan(Date value) {
             addCriterion("lastplaytime <", value, "lastplaytime");
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeLessThanOrEqualTo(Integer value) {
+        public Criteria andLastplaytimeLessThanOrEqualTo(Date value) {
             addCriterion("lastplaytime <=", value, "lastplaytime");
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeIn(List<Integer> values) {
+        public Criteria andLastplaytimeIn(List<Date> values) {
             addCriterion("lastplaytime in", values, "lastplaytime");
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeNotIn(List<Integer> values) {
+        public Criteria andLastplaytimeNotIn(List<Date> values) {
             addCriterion("lastplaytime not in", values, "lastplaytime");
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeBetween(Integer value1, Integer value2) {
+        public Criteria andLastplaytimeBetween(Date value1, Date value2) {
             addCriterion("lastplaytime between", value1, value2, "lastplaytime");
             return (Criteria) this;
         }
 
-        public Criteria andLastplaytimeNotBetween(Integer value1, Integer value2) {
+        public Criteria andLastplaytimeNotBetween(Date value1, Date value2) {
             addCriterion("lastplaytime not between", value1, value2, "lastplaytime");
             return (Criteria) this;
         }

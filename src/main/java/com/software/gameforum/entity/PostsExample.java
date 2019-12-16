@@ -455,63 +455,303 @@ public class PostsExample {
             return (Criteria) this;
         }
 
-        public Criteria andReplynumIsNull() {
-            addCriterion("replynum is null");
+        public Criteria andUseridIsNull() {
+            addCriterion("userid is null");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumIsNotNull() {
-            addCriterion("replynum is not null");
+        public Criteria andUseridIsNotNull() {
+            addCriterion("userid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumEqualTo(Integer value) {
-            addCriterion("replynum =", value, "replynum");
+        public Criteria andUseridEqualTo(Integer value) {
+            addCriterion("userid =", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumNotEqualTo(Integer value) {
-            addCriterion("replynum <>", value, "replynum");
+        public Criteria andUseridNotEqualTo(Integer value) {
+            addCriterion("userid <>", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumGreaterThan(Integer value) {
-            addCriterion("replynum >", value, "replynum");
+        public Criteria andUseridGreaterThan(Integer value) {
+            addCriterion("userid >", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumGreaterThanOrEqualTo(Integer value) {
-            addCriterion("replynum >=", value, "replynum");
+        public Criteria andUseridGreaterThanOrEqualTo(Integer value) {
+            addCriterion("userid >=", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumLessThan(Integer value) {
-            addCriterion("replynum <", value, "replynum");
+        public Criteria andUseridLessThan(Integer value) {
+            addCriterion("userid <", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumLessThanOrEqualTo(Integer value) {
-            addCriterion("replynum <=", value, "replynum");
+        public Criteria andUseridLessThanOrEqualTo(Integer value) {
+            addCriterion("userid <=", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumIn(List<Integer> values) {
-            addCriterion("replynum in", values, "replynum");
+        public Criteria andUseridIn(List<Integer> values) {
+            addCriterion("userid in", values, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumNotIn(List<Integer> values) {
-            addCriterion("replynum not in", values, "replynum");
+        public Criteria andUseridNotIn(List<Integer> values) {
+            addCriterion("userid not in", values, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumBetween(Integer value1, Integer value2) {
-            addCriterion("replynum between", value1, value2, "replynum");
+        public Criteria andUseridBetween(Integer value1, Integer value2) {
+            addCriterion("userid between", value1, value2, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andReplynumNotBetween(Integer value1, Integer value2) {
-            addCriterion("replynum not between", value1, value2, "replynum");
+        public Criteria andUseridNotBetween(Integer value1, Integer value2) {
+            addCriterion("userid not between", value1, value2, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidIsNull() {
+            addCriterion("gameid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidIsNotNull() {
+            addCriterion("gameid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidEqualTo(Integer value) {
+            addCriterion("gameid =", value, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidNotEqualTo(Integer value) {
+            addCriterion("gameid <>", value, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidGreaterThan(Integer value) {
+            addCriterion("gameid >", value, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("gameid >=", value, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidLessThan(Integer value) {
+            addCriterion("gameid <", value, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidLessThanOrEqualTo(Integer value) {
+            addCriterion("gameid <=", value, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidIn(List<Integer> values) {
+            addCriterion("gameid in", values, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidNotIn(List<Integer> values) {
+            addCriterion("gameid not in", values, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidBetween(Integer value1, Integer value2) {
+            addCriterion("gameid between", value1, value2, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGameidNotBetween(Integer value1, Integer value2) {
+            addCriterion("gameid not between", value1, value2, "gameid");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumIsNull() {
+            addCriterion("msgnum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumIsNotNull() {
+            addCriterion("msgnum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumEqualTo(Integer value) {
+            addCriterion("msgnum =", value, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumNotEqualTo(Integer value) {
+            addCriterion("msgnum <>", value, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumGreaterThan(Integer value) {
+            addCriterion("msgnum >", value, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("msgnum >=", value, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumLessThan(Integer value) {
+            addCriterion("msgnum <", value, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumLessThanOrEqualTo(Integer value) {
+            addCriterion("msgnum <=", value, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumIn(List<Integer> values) {
+            addCriterion("msgnum in", values, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumNotIn(List<Integer> values) {
+            addCriterion("msgnum not in", values, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumBetween(Integer value1, Integer value2) {
+            addCriterion("msgnum between", value1, value2, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgnumNotBetween(Integer value1, Integer value2) {
+            addCriterion("msgnum not between", value1, value2, "msgnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumIsNull() {
+            addCriterion("praisenum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumIsNotNull() {
+            addCriterion("praisenum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumEqualTo(Integer value) {
+            addCriterion("praisenum =", value, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumNotEqualTo(Integer value) {
+            addCriterion("praisenum <>", value, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumGreaterThan(Integer value) {
+            addCriterion("praisenum >", value, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("praisenum >=", value, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumLessThan(Integer value) {
+            addCriterion("praisenum <", value, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumLessThanOrEqualTo(Integer value) {
+            addCriterion("praisenum <=", value, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumIn(List<Integer> values) {
+            addCriterion("praisenum in", values, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumNotIn(List<Integer> values) {
+            addCriterion("praisenum not in", values, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumBetween(Integer value1, Integer value2) {
+            addCriterion("praisenum between", value1, value2, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPraisenumNotBetween(Integer value1, Integer value2) {
+            addCriterion("praisenum not between", value1, value2, "praisenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumIsNull() {
+            addCriterion("follownum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumIsNotNull() {
+            addCriterion("follownum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumEqualTo(Integer value) {
+            addCriterion("follownum =", value, "follownum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumNotEqualTo(Integer value) {
+            addCriterion("follownum <>", value, "follownum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumGreaterThan(Integer value) {
+            addCriterion("follownum >", value, "follownum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("follownum >=", value, "follownum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumLessThan(Integer value) {
+            addCriterion("follownum <", value, "follownum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumLessThanOrEqualTo(Integer value) {
+            addCriterion("follownum <=", value, "follownum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumIn(List<Integer> values) {
+            addCriterion("follownum in", values, "follownum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumNotIn(List<Integer> values) {
+            addCriterion("follownum not in", values, "follownum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumBetween(Integer value1, Integer value2) {
+            addCriterion("follownum between", value1, value2, "follownum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollownumNotBetween(Integer value1, Integer value2) {
+            addCriterion("follownum not between", value1, value2, "follownum");
             return (Criteria) this;
         }
 

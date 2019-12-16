@@ -7,7 +7,11 @@
     <result column="topic" jdbcType="VARCHAR" property="topic" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="replynum" jdbcType="INTEGER" property="replynum" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="gameid" jdbcType="INTEGER" property="gameid" />
+    <result column="msgnum" jdbcType="INTEGER" property="msgnum" />
+    <result column="praisenum" jdbcType="INTEGER" property="praisenum" />
+    <result column="follownum" jdbcType="INTEGER" property="follownum" />
     <result column="addone" jdbcType="INTEGER" property="addone" />
     <result column="addtwo" jdbcType="VARCHAR" property="addtwo" />
   </resultMap>
@@ -70,7 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, url, topic, `time`, content, replynum, addone, addtwo
+    id, url, topic, `time`, content, userid, gameid, msgnum, praisenum, follownum, addone, 
+    addtwo
   </sql>
   <select id="selectByExample" parameterType="com.software.gameforum.entity.PostsExample" resultMap="BaseResultMap">
     select
@@ -100,6 +105,11 @@
     from posts
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectUserFollow" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select posts.id as id, url, topic, `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum
+    from posts left join userfollowposts on posts.id=userfollowposts.postid
+    where userfollowposts.userid = #{id,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from posts
     where id = #{id,jdbcType=INTEGER}
@@ -112,11 +122,13 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Posts" useGeneratedKeys="true">
     insert into posts (url, topic, `time`, 
-      content, replynum, addone, 
-      addtwo)
+      content, userid, gameid, 
+      msgnum, praisenum, follownum, 
+      addone, addtwo)
     values (#{url,jdbcType=VARCHAR}, #{topic,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=VARCHAR}, #{replynum,jdbcType=INTEGER}, #{addone,jdbcType=INTEGER}, 
-      #{addtwo,jdbcType=VARCHAR})
+      #{content,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{gameid,jdbcType=INTEGER}, 
+      #{msgnum,jdbcType=INTEGER}, #{praisenum,jdbcType=INTEGER}, #{follownum,jdbcType=INTEGER}, 
+      #{addone,jdbcType=INTEGER}, #{addtwo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Posts" useGeneratedKeys="true">
     insert into posts
@@ -133,8 +145,20 @@
       <if test="content != null">
         content,
       </if>
-      <if test="replynum != null">
-        replynum,
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="gameid != null">
+        gameid,
+      </if>
+      <if test="msgnum != null">
+        msgnum,
+      </if>
+      <if test="praisenum != null">
+        praisenum,
+      </if>
+      <if test="follownum != null">
+        follownum,
       </if>
       <if test="addone != null">
         addone,
@@ -156,8 +180,20 @@
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="replynum != null">
-        #{replynum,jdbcType=INTEGER},
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="gameid != null">
+        #{gameid,jdbcType=INTEGER},
+      </if>
+      <if test="msgnum != null">
+        #{msgnum,jdbcType=INTEGER},
+      </if>
+      <if test="praisenum != null">
+        #{praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="follownum != null">
+        #{follownum,jdbcType=INTEGER},
       </if>
       <if test="addone != null">
         #{addone,jdbcType=INTEGER},
@@ -191,8 +227,20 @@
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.replynum != null">
-        replynum = #{record.replynum,jdbcType=INTEGER},
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameid != null">
+        gameid = #{record.gameid,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgnum != null">
+        msgnum = #{record.msgnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.praisenum != null">
+        praisenum = #{record.praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.follownum != null">
+        follownum = #{record.follownum,jdbcType=INTEGER},
       </if>
       <if test="record.addone != null">
         addone = #{record.addone,jdbcType=INTEGER},
@@ -212,7 +260,11 @@
       topic = #{record.topic,jdbcType=VARCHAR},
       `time` = #{record.time,jdbcType=TIMESTAMP},
       content = #{record.content,jdbcType=VARCHAR},
-      replynum = #{record.replynum,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=INTEGER},
+      gameid = #{record.gameid,jdbcType=INTEGER},
+      msgnum = #{record.msgnum,jdbcType=INTEGER},
+      praisenum = #{record.praisenum,jdbcType=INTEGER},
+      follownum = #{record.follownum,jdbcType=INTEGER},
       addone = #{record.addone,jdbcType=INTEGER},
       addtwo = #{record.addtwo,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -234,8 +286,20 @@
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="replynum != null">
-        replynum = #{replynum,jdbcType=INTEGER},
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="gameid != null">
+        gameid = #{gameid,jdbcType=INTEGER},
+      </if>
+      <if test="msgnum != null">
+        msgnum = #{msgnum,jdbcType=INTEGER},
+      </if>
+      <if test="praisenum != null">
+        praisenum = #{praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="follownum != null">
+        follownum = #{follownum,jdbcType=INTEGER},
       </if>
       <if test="addone != null">
         addone = #{addone,jdbcType=INTEGER},
@@ -252,7 +316,11 @@
       topic = #{topic,jdbcType=VARCHAR},
       `time` = #{time,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=VARCHAR},
-      replynum = #{replynum,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      gameid = #{gameid,jdbcType=INTEGER},
+      msgnum = #{msgnum,jdbcType=INTEGER},
+      praisenum = #{praisenum,jdbcType=INTEGER},
+      follownum = #{follownum,jdbcType=INTEGER},
       addone = #{addone,jdbcType=INTEGER},
       addtwo = #{addtwo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

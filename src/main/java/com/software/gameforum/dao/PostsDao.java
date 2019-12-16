@@ -2,7 +2,9 @@ package com.software.gameforum.dao;
 
 import com.software.gameforum.entity.Posts;
 import com.software.gameforum.entity.PostsExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface PostsDao {
@@ -27,4 +29,6 @@ public interface PostsDao {
     int updateByPrimaryKeySelective(Posts record);
 
     int updateByPrimaryKey(Posts record);
+
+    List<Posts> selectUserFollow(Integer id);
 }

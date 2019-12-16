@@ -1,13 +1,18 @@
 package com.software.gameforum.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("")
 public class TestController {
-    @RequestMapping({"index","","login"})
-    public String init(){
-        return "you need login";
+    @RequestMapping({"index", "", "login"})
+    public String init() {
+        return "login";
+    }
+
+    @RequestMapping("test")
+    public String test() {
+        return "test";
     }
 }

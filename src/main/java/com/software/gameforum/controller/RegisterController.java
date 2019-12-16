@@ -32,35 +32,34 @@ public class RegisterController {
         int result = userService.register(user);
         GameForumJSON gameForumJSON = new GameForumJSON();
         if (result == -1) {
-            gameForumJSON.put(errorCodeStr, 1);
-            gameForumJSON.put(messageStr, "电话号码或者邮箱已存在");
+            gameForumJSON.setErrorCode(1, "电话号码或者邮箱已存在");
         } else if (result == 1) {
-            gameForumJSON.put(errorCodeStr, 0);
-            gameForumJSON.put(messageStr, "成功");
-            User userSession=new User();
-            userSession.setId(user.getId());
-            userSession.setEmail(user.getEmail());
-            HttpSession httpSession=request.getSession();
-            httpSession.setAttribute("user",userSession);
+            gameForumJSON.setSuccessCode();
+            setSession(request, user);
         }
-        return gameForumJSON.toJSONString();
+        return gameForumJSON.toMyString(true);
     }
+
     @PostMapping(value = "login", produces = "application/json;charset=UTF-8")
     public String login(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
-        GameForumJSON gameForumJSON=new GameForumJSON();
-        User user=userService.login(jsonObject.getString("username"),jsonObject.getString("password"));
-        if(user==null){
-            gameForumJSON.put(errorCodeStr, 1);
-            gameForumJSON.put(messageStr, "用户名或者密码错误");
-        }else {
-            gameForumJSON.put(errorCodeStr, 0);
-            gameForumJSON.put(messageStr, "成功");
-            User userSession=new User();
-            userSession.setId(user.getId());
-            userSession.setEmail(user.getEmail());
-            HttpSession httpSession=request.getSession();
-            httpSession.setAttribute("user",userSession);
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        User user = userService.login(jsonObject.getString("username"), jsonObject.getString("password"));
+        if (user == null) {
+            gameForumJSON.setErrorCode(1, "邮箱或者密码错误");
+        } else {
+            gameForumJSON.setSuccessCode();
+            setSession(request, user);
         }
-        return gameForumJSON.toJSONString();
+        return gameForumJSON.toMyString(true);
+    }
+
+    //如果更改了session的存储信息多少，请务必更新UserController的updateSession
+    private void setSession(HttpServletRequest request, User user) {
+        User userSession = new User();
+        userSession.setId(user.getId());
+        userSession.setEmail(user.getEmail());
+        userSession.setHeadpic(user.getHeadpic());
+        HttpSession httpSession = request.getSession();
+        httpSession.setAttribute("user", userSession);
     }
 }

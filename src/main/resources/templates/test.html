@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/jquery-3.4.1.js}"></script>
+</head>
+<body>
+<form method="post" action="/api/user/modifyInfo" enctype="multipart/form-data">
+    <input name="username" type="text">
+    <input name="phonenum" type="text">
+    <input name="email" type="text">
+    <input name="headpic" type="file" accept="image/*">
+    <button type="submit">修改</button>
+</form>
+</body>
+</html>

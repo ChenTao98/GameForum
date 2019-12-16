@@ -1,6 +1,7 @@
 package com.software.gameforum.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * userplaysgames
@@ -13,7 +14,7 @@ public class Userplaysgames implements Serializable {
 
     private Integer gameid;
 
-    private Integer lastplaytime;
+    private Date lastplaytime;
 
     private Integer addone;
 
@@ -45,11 +46,11 @@ public class Userplaysgames implements Serializable {
         this.gameid = gameid;
     }
 
-    public Integer getLastplaytime() {
+    public Date getLastplaytime() {
         return lastplaytime;
     }
 
-    public void setLastplaytime(Integer lastplaytime) {
+    public void setLastplaytime(Date lastplaytime) {
         this.lastplaytime = lastplaytime;
     }
 

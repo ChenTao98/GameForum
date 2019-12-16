@@ -11,6 +11,15 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   freemarker:
     cache: false
+  thymeleaf:
+      cache: false
+      prefix: classpath:/templates/
+      check-template-location: true
+      suffix: .html
+      encoding: UTF-8
+      servlet:
+        content-type: text/html
+      mode: HTML5
 #  redis:
 #    database: 0
 #    host: localhost

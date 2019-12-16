@@ -394,73 +394,73 @@ public class GamesExample {
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonIsNull() {
-            addCriterion("introducton is null");
+        public Criteria andIntroductionIsNull() {
+            addCriterion("introduction is null");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonIsNotNull() {
-            addCriterion("introducton is not null");
+        public Criteria andIntroductionIsNotNull() {
+            addCriterion("introduction is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonEqualTo(String value) {
-            addCriterion("introducton =", value, "introducton");
+        public Criteria andIntroductionEqualTo(String value) {
+            addCriterion("introduction =", value, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonNotEqualTo(String value) {
-            addCriterion("introducton <>", value, "introducton");
+        public Criteria andIntroductionNotEqualTo(String value) {
+            addCriterion("introduction <>", value, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonGreaterThan(String value) {
-            addCriterion("introducton >", value, "introducton");
+        public Criteria andIntroductionGreaterThan(String value) {
+            addCriterion("introduction >", value, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonGreaterThanOrEqualTo(String value) {
-            addCriterion("introducton >=", value, "introducton");
+        public Criteria andIntroductionGreaterThanOrEqualTo(String value) {
+            addCriterion("introduction >=", value, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonLessThan(String value) {
-            addCriterion("introducton <", value, "introducton");
+        public Criteria andIntroductionLessThan(String value) {
+            addCriterion("introduction <", value, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonLessThanOrEqualTo(String value) {
-            addCriterion("introducton <=", value, "introducton");
+        public Criteria andIntroductionLessThanOrEqualTo(String value) {
+            addCriterion("introduction <=", value, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonLike(String value) {
-            addCriterion("introducton like", value, "introducton");
+        public Criteria andIntroductionLike(String value) {
+            addCriterion("introduction like", value, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonNotLike(String value) {
-            addCriterion("introducton not like", value, "introducton");
+        public Criteria andIntroductionNotLike(String value) {
+            addCriterion("introduction not like", value, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonIn(List<String> values) {
-            addCriterion("introducton in", values, "introducton");
+        public Criteria andIntroductionIn(List<String> values) {
+            addCriterion("introduction in", values, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonNotIn(List<String> values) {
-            addCriterion("introducton not in", values, "introducton");
+        public Criteria andIntroductionNotIn(List<String> values) {
+            addCriterion("introduction not in", values, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonBetween(String value1, String value2) {
-            addCriterion("introducton between", value1, value2, "introducton");
+        public Criteria andIntroductionBetween(String value1, String value2) {
+            addCriterion("introduction between", value1, value2, "introduction");
             return (Criteria) this;
         }
 
-        public Criteria andIntroductonNotBetween(String value1, String value2) {
-            addCriterion("introducton not between", value1, value2, "introducton");
+        public Criteria andIntroductionNotBetween(String value1, String value2) {
+            addCriterion("introduction not between", value1, value2, "introduction");
             return (Criteria) this;
         }
 
@@ -531,6 +531,66 @@ public class GamesExample {
 
         public Criteria andHelpNotBetween(String value1, String value2) {
             addCriterion("help not between", value1, value2, "help");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumIsNull() {
+            addCriterion("postnum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumIsNotNull() {
+            addCriterion("postnum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumEqualTo(Integer value) {
+            addCriterion("postnum =", value, "postnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumNotEqualTo(Integer value) {
+            addCriterion("postnum <>", value, "postnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumGreaterThan(Integer value) {
+            addCriterion("postnum >", value, "postnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("postnum >=", value, "postnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumLessThan(Integer value) {
+            addCriterion("postnum <", value, "postnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumLessThanOrEqualTo(Integer value) {
+            addCriterion("postnum <=", value, "postnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumIn(List<Integer> values) {
+            addCriterion("postnum in", values, "postnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumNotIn(List<Integer> values) {
+            addCriterion("postnum not in", values, "postnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumBetween(Integer value1, Integer value2) {
+            addCriterion("postnum between", value1, value2, "postnum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostnumNotBetween(Integer value1, Integer value2) {
+            addCriterion("postnum not between", value1, value2, "postnum");
             return (Criteria) this;
         }
 

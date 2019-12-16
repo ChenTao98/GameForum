@@ -2,7 +2,9 @@ package com.software.gameforum.dao;
 
 import com.software.gameforum.entity.Games;
 import com.software.gameforum.entity.GamesExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface GamesDao {
@@ -20,6 +22,10 @@ public interface GamesDao {
 
     Games selectByPrimaryKey(Integer id);
 
+    List<Games> selectByFollow(Integer id);
+
+    List<Games> selectByPlay(Integer id);
+
     int updateByExampleSelective(@Param("record") Games record, @Param("example") GamesExample example);
 
     int updateByExample(@Param("record") Games record, @Param("example") GamesExample example);
@@ -27,4 +33,6 @@ public interface GamesDao {
     int updateByPrimaryKeySelective(Games record);
 
     int updateByPrimaryKey(Games record);
+
+    int addPostnum(Integer gameid);
 }

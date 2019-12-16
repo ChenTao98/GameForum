@@ -6,8 +6,9 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="gamename" jdbcType="VARCHAR" property="gamename" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="introducton" jdbcType="VARCHAR" property="introducton" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="help" jdbcType="VARCHAR" property="help" />
+    <result column="postnum" jdbcType="INTEGER" property="postnum" />
     <result column="addone" jdbcType="INTEGER" property="addone" />
     <result column="addtwo" jdbcType="VARCHAR" property="addtwo" />
   </resultMap>
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, url, gamename, icon, introducton, help, addone, addtwo
+    id, url, gamename, icon, introduction, help, postnum, addone, addtwo
   </sql>
   <select id="selectByExample" parameterType="com.software.gameforum.entity.GamesExample" resultMap="BaseResultMap">
     select
@@ -100,6 +101,16 @@
     from games
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByPlay" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select games.id as id, url,gamename, icon, introduction, help, postnum
+    from games left join userplaysgames on games.id=userplaysgames.gameid
+    where userplaysgames.userid = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByFollow" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select games.id as id, url,gamename, icon, introduction, help, postnum
+    from games left join userfollowgames on games.id=userfollowgames.gameid
+    where userfollowgames.userid= #{id,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from games
     where id = #{id,jdbcType=INTEGER}
@@ -112,11 +123,11 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Games" useGeneratedKeys="true">
     insert into games (url, gamename, icon, 
-      introducton, help, addone, 
-      addtwo)
+      introduction, help, postnum, 
+      addone, addtwo)
     values (#{url,jdbcType=VARCHAR}, #{gamename,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
-      #{introducton,jdbcType=VARCHAR}, #{help,jdbcType=VARCHAR}, #{addone,jdbcType=INTEGER}, 
-      #{addtwo,jdbcType=VARCHAR})
+      #{introduction,jdbcType=VARCHAR}, #{help,jdbcType=VARCHAR}, #{postnum,jdbcType=INTEGER}, 
+      #{addone,jdbcType=INTEGER}, #{addtwo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Games" useGeneratedKeys="true">
     insert into games
@@ -130,11 +141,14 @@
       <if test="icon != null">
         icon,
       </if>
-      <if test="introducton != null">
-        introducton,
+      <if test="introduction != null">
+        introduction,
       </if>
       <if test="help != null">
         help,
+      </if>
+      <if test="postnum != null">
+        postnum,
       </if>
       <if test="addone != null">
         addone,
@@ -153,11 +167,14 @@
       <if test="icon != null">
         #{icon,jdbcType=VARCHAR},
       </if>
-      <if test="introducton != null">
-        #{introducton,jdbcType=VARCHAR},
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="help != null">
         #{help,jdbcType=VARCHAR},
+      </if>
+      <if test="postnum != null">
+        #{postnum,jdbcType=INTEGER},
       </if>
       <if test="addone != null">
         #{addone,jdbcType=INTEGER},
@@ -188,11 +205,14 @@
       <if test="record.icon != null">
         icon = #{record.icon,jdbcType=VARCHAR},
       </if>
-      <if test="record.introducton != null">
-        introducton = #{record.introducton,jdbcType=VARCHAR},
+      <if test="record.introduction != null">
+        introduction = #{record.introduction,jdbcType=VARCHAR},
       </if>
       <if test="record.help != null">
         help = #{record.help,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postnum != null">
+        postnum = #{record.postnum,jdbcType=INTEGER},
       </if>
       <if test="record.addone != null">
         addone = #{record.addone,jdbcType=INTEGER},
@@ -211,13 +231,18 @@
       url = #{record.url,jdbcType=VARCHAR},
       gamename = #{record.gamename,jdbcType=VARCHAR},
       icon = #{record.icon,jdbcType=VARCHAR},
-      introducton = #{record.introducton,jdbcType=VARCHAR},
+      introduction = #{record.introduction,jdbcType=VARCHAR},
       help = #{record.help,jdbcType=VARCHAR},
+      postnum = #{record.postnum,jdbcType=INTEGER},
       addone = #{record.addone,jdbcType=INTEGER},
       addtwo = #{record.addtwo,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="addPostnum" parameterType="java.lang.Integer">
+    update games
+    set postnum = postnum+1 where id=#{gameid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.software.gameforum.entity.Games">
     update games
@@ -231,11 +256,14 @@
       <if test="icon != null">
         icon = #{icon,jdbcType=VARCHAR},
       </if>
-      <if test="introducton != null">
-        introducton = #{introducton,jdbcType=VARCHAR},
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="help != null">
         help = #{help,jdbcType=VARCHAR},
+      </if>
+      <if test="postnum != null">
+        postnum = #{postnum,jdbcType=INTEGER},
       </if>
       <if test="addone != null">
         addone = #{addone,jdbcType=INTEGER},
@@ -251,8 +279,9 @@
     set url = #{url,jdbcType=VARCHAR},
       gamename = #{gamename,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
-      introducton = #{introducton,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
       help = #{help,jdbcType=VARCHAR},
+      postnum = #{postnum,jdbcType=INTEGER},
       addone = #{addone,jdbcType=INTEGER},
       addtwo = #{addtwo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

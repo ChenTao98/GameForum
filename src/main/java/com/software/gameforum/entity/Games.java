@@ -1,10 +1,12 @@
 package com.software.gameforum.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * games
- * @author 
+ *
+ * @author
  */
 public class Games implements Serializable {
     private Integer id;
@@ -15,13 +17,27 @@ public class Games implements Serializable {
 
     private String icon;
 
-    private String introducton;
+    private String introduction;
 
     private String help;
+
+    private Integer postnum;
 
     private Integer addone;
 
     private String addtwo;
+
+
+    private List<Posts> posts;
+
+    public List<Posts> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Posts> posts) {
+        this.posts = posts;
+    }
+
 
     private static final long serialVersionUID = 1L;
 
@@ -57,12 +73,12 @@ public class Games implements Serializable {
         this.icon = icon;
     }
 
-    public String getIntroducton() {
-        return introducton;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setIntroducton(String introducton) {
-        this.introducton = introducton;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     public String getHelp() {
@@ -71,6 +87,14 @@ public class Games implements Serializable {
 
     public void setHelp(String help) {
         this.help = help;
+    }
+
+    public Integer getPostnum() {
+        return postnum;
+    }
+
+    public void setPostnum(Integer postnum) {
+        this.postnum = postnum;
     }
 
     public Integer getAddone() {
@@ -102,13 +126,14 @@ public class Games implements Serializable {
         }
         Games other = (Games) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
-            && (this.getGamename() == null ? other.getGamename() == null : this.getGamename().equals(other.getGamename()))
-            && (this.getIcon() == null ? other.getIcon() == null : this.getIcon().equals(other.getIcon()))
-            && (this.getIntroducton() == null ? other.getIntroducton() == null : this.getIntroducton().equals(other.getIntroducton()))
-            && (this.getHelp() == null ? other.getHelp() == null : this.getHelp().equals(other.getHelp()))
-            && (this.getAddone() == null ? other.getAddone() == null : this.getAddone().equals(other.getAddone()))
-            && (this.getAddtwo() == null ? other.getAddtwo() == null : this.getAddtwo().equals(other.getAddtwo()));
+                && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
+                && (this.getGamename() == null ? other.getGamename() == null : this.getGamename().equals(other.getGamename()))
+                && (this.getIcon() == null ? other.getIcon() == null : this.getIcon().equals(other.getIcon()))
+                && (this.getIntroduction() == null ? other.getIntroduction() == null : this.getIntroduction().equals(other.getIntroduction()))
+                && (this.getHelp() == null ? other.getHelp() == null : this.getHelp().equals(other.getHelp()))
+                && (this.getPostnum() == null ? other.getPostnum() == null : this.getPostnum().equals(other.getPostnum()))
+                && (this.getAddone() == null ? other.getAddone() == null : this.getAddone().equals(other.getAddone()))
+                && (this.getAddtwo() == null ? other.getAddtwo() == null : this.getAddtwo().equals(other.getAddtwo()));
     }
 
     @Override
@@ -119,8 +144,9 @@ public class Games implements Serializable {
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result + ((getGamename() == null) ? 0 : getGamename().hashCode());
         result = prime * result + ((getIcon() == null) ? 0 : getIcon().hashCode());
-        result = prime * result + ((getIntroducton() == null) ? 0 : getIntroducton().hashCode());
+        result = prime * result + ((getIntroduction() == null) ? 0 : getIntroduction().hashCode());
         result = prime * result + ((getHelp() == null) ? 0 : getHelp().hashCode());
+        result = prime * result + ((getPostnum() == null) ? 0 : getPostnum().hashCode());
         result = prime * result + ((getAddone() == null) ? 0 : getAddone().hashCode());
         result = prime * result + ((getAddtwo() == null) ? 0 : getAddtwo().hashCode());
         return result;
@@ -136,8 +162,9 @@ public class Games implements Serializable {
         sb.append(", url=").append(url);
         sb.append(", gamename=").append(gamename);
         sb.append(", icon=").append(icon);
-        sb.append(", introducton=").append(introducton);
+        sb.append(", introduction=").append(introduction);
         sb.append(", help=").append(help);
+        sb.append(", postnum=").append(postnum);
         sb.append(", addone=").append(addone);
         sb.append(", addtwo=").append(addtwo);
         sb.append(", serialVersionUID=").append(serialVersionUID);
