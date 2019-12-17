@@ -1,127 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.software.gameforum.dao.GamesDao">
-  <resultMap id="BaseResultMap" type="com.software.gameforum.entity.Games">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="gamename" jdbcType="VARCHAR" property="gamename" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
-    <result column="help" jdbcType="VARCHAR" property="help" />
-    <result column="postnum" jdbcType="INTEGER" property="postnum" />
-    <result column="addone" jdbcType="INTEGER" property="addone" />
-    <result column="addtwo" jdbcType="VARCHAR" property="addtwo" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.software.gameforum.entity.Games">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="gamename" jdbcType="VARCHAR" property="gamename"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
+        <result column="help" jdbcType="VARCHAR" property="help"/>
+        <result column="postnum" jdbcType="INTEGER" property="postnum"/>
+        <result column="addone" jdbcType="INTEGER" property="addone"/>
+        <result column="addtwo" jdbcType="VARCHAR" property="addtwo"/>
+    </resultMap>
+
+    <resultMap id="GameAndPost" type="com.software.gameforum.entity.Games">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="gamename" jdbcType="VARCHAR" property="gamename"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
+        <result column="help" jdbcType="VARCHAR" property="help"/>
+        <result column="postnum" jdbcType="INTEGER" property="postnum"/>
+        <result column="addone" jdbcType="INTEGER" property="addone"/>
+        <result column="addtwo" jdbcType="VARCHAR" property="addtwo"/>
+        <collection property="posts" ofType="com.software.gameforum.entity.Posts">
+            <id column="postid" jdbcType="INTEGER" property="id"/>
+            <result column="posturl" jdbcType="VARCHAR" property="url"/>
+            <result column="topic" jdbcType="VARCHAR" property="topic"/>
+            <result column="time" jdbcType="TIMESTAMP" property="time"/>
+            <result column="content" jdbcType="VARCHAR" property="content"/>
+            <result column="userid" jdbcType="INTEGER" property="userid"/>
+            <result column="gameid" jdbcType="INTEGER" property="gameid"/>
+            <result column="msgnum" jdbcType="INTEGER" property="msgnum"/>
+            <result column="praisenum" jdbcType="INTEGER" property="praisenum"/>
+            <result column="follownum" jdbcType="INTEGER" property="follownum"/>
+            <result column="addone" jdbcType="INTEGER" property="addone"/>
+            <result column="addtwo" jdbcType="VARCHAR" property="addtwo"/>
+        </collection>
+    </resultMap>
+
+    <select id="gameAndPosts" parameterType="java.lang.Integer" resultMap="GameAndPost">
+        select games.id as id,games.url as url,gamename,icon,introduction,help, postnum,
+        posts.id as postid,posts.url as posturl,topic, `time`, content, userid, gameid, msgnum, praisenum, follownum
+        from games left join posts on games.id=posts.gameid
+        where games.id in
+        (select t.id from (select id from games limit #{step,jdbcType=INTEGER}) as t)
+        order by games.id asc,posts.time desc
+    </select>
+
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     id, url, gamename, icon, introduction, help, postnum, addone, addtwo
   </sql>
-  <select id="selectByExample" parameterType="com.software.gameforum.entity.GamesExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from games
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="limit != null">
-      <if test="offset != null">
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null">
-        limit ${limit}
-      </if>
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from games
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectByPlay" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+    <select id="selectByExample" parameterType="com.software.gameforum.entity.GamesExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from games
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="limit != null">
+            <if test="offset != null">
+                limit ${offset}, ${limit}
+            </if>
+            <if test="offset == null">
+                limit ${limit}
+            </if>
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from games
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByPlay" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select games.id as id, url,gamename, icon, introduction, help, postnum
     from games left join userplaysgames on games.id=userplaysgames.gameid
     where userplaysgames.userid = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByFollow" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByFollow" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select games.id as id, url,gamename, icon, introduction, help, postnum
     from games left join userfollowgames on games.id=userfollowgames.gameid
     where userfollowgames.userid= #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from games
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.software.gameforum.entity.GamesExample">
-    delete from games
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Games" useGeneratedKeys="true">
+    <delete id="deleteByExample" parameterType="com.software.gameforum.entity.GamesExample">
+        delete from games
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Games"
+            useGeneratedKeys="true">
     insert into games (url, gamename, icon, 
       introduction, help, postnum, 
       addone, addtwo)
@@ -129,152 +170,153 @@
       #{introduction,jdbcType=VARCHAR}, #{help,jdbcType=VARCHAR}, #{postnum,jdbcType=INTEGER}, 
       #{addone,jdbcType=INTEGER}, #{addtwo,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Games" useGeneratedKeys="true">
-    insert into games
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="url != null">
-        url,
-      </if>
-      <if test="gamename != null">
-        gamename,
-      </if>
-      <if test="icon != null">
-        icon,
-      </if>
-      <if test="introduction != null">
-        introduction,
-      </if>
-      <if test="help != null">
-        help,
-      </if>
-      <if test="postnum != null">
-        postnum,
-      </if>
-      <if test="addone != null">
-        addone,
-      </if>
-      <if test="addtwo != null">
-        addtwo,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="gamename != null">
-        #{gamename,jdbcType=VARCHAR},
-      </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null">
-        #{introduction,jdbcType=VARCHAR},
-      </if>
-      <if test="help != null">
-        #{help,jdbcType=VARCHAR},
-      </if>
-      <if test="postnum != null">
-        #{postnum,jdbcType=INTEGER},
-      </if>
-      <if test="addone != null">
-        #{addone,jdbcType=INTEGER},
-      </if>
-      <if test="addtwo != null">
-        #{addtwo,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.software.gameforum.entity.GamesExample" resultType="java.lang.Long">
-    select count(*) from games
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update games
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.url != null">
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Games"
+            useGeneratedKeys="true">
+        insert into games
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="url != null">
+                url,
+            </if>
+            <if test="gamename != null">
+                gamename,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+            <if test="help != null">
+                help,
+            </if>
+            <if test="postnum != null">
+                postnum,
+            </if>
+            <if test="addone != null">
+                addone,
+            </if>
+            <if test="addtwo != null">
+                addtwo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="gamename != null">
+                #{gamename,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="introduction != null">
+                #{introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="help != null">
+                #{help,jdbcType=VARCHAR},
+            </if>
+            <if test="postnum != null">
+                #{postnum,jdbcType=INTEGER},
+            </if>
+            <if test="addone != null">
+                #{addone,jdbcType=INTEGER},
+            </if>
+            <if test="addtwo != null">
+                #{addtwo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.software.gameforum.entity.GamesExample" resultType="java.lang.Long">
+        select count(*) from games
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update games
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.url != null">
+                url = #{record.url,jdbcType=VARCHAR},
+            </if>
+            <if test="record.gamename != null">
+                gamename = #{record.gamename,jdbcType=VARCHAR},
+            </if>
+            <if test="record.icon != null">
+                icon = #{record.icon,jdbcType=VARCHAR},
+            </if>
+            <if test="record.introduction != null">
+                introduction = #{record.introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="record.help != null">
+                help = #{record.help,jdbcType=VARCHAR},
+            </if>
+            <if test="record.postnum != null">
+                postnum = #{record.postnum,jdbcType=INTEGER},
+            </if>
+            <if test="record.addone != null">
+                addone = #{record.addone,jdbcType=INTEGER},
+            </if>
+            <if test="record.addtwo != null">
+                addtwo = #{record.addtwo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update games
+        set id = #{record.id,jdbcType=INTEGER},
         url = #{record.url,jdbcType=VARCHAR},
-      </if>
-      <if test="record.gamename != null">
         gamename = #{record.gamename,jdbcType=VARCHAR},
-      </if>
-      <if test="record.icon != null">
         icon = #{record.icon,jdbcType=VARCHAR},
-      </if>
-      <if test="record.introduction != null">
         introduction = #{record.introduction,jdbcType=VARCHAR},
-      </if>
-      <if test="record.help != null">
         help = #{record.help,jdbcType=VARCHAR},
-      </if>
-      <if test="record.postnum != null">
         postnum = #{record.postnum,jdbcType=INTEGER},
-      </if>
-      <if test="record.addone != null">
         addone = #{record.addone,jdbcType=INTEGER},
-      </if>
-      <if test="record.addtwo != null">
-        addtwo = #{record.addtwo,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update games
-    set id = #{record.id,jdbcType=INTEGER},
-      url = #{record.url,jdbcType=VARCHAR},
-      gamename = #{record.gamename,jdbcType=VARCHAR},
-      icon = #{record.icon,jdbcType=VARCHAR},
-      introduction = #{record.introduction,jdbcType=VARCHAR},
-      help = #{record.help,jdbcType=VARCHAR},
-      postnum = #{record.postnum,jdbcType=INTEGER},
-      addone = #{record.addone,jdbcType=INTEGER},
-      addtwo = #{record.addtwo,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="addPostnum" parameterType="java.lang.Integer">
+        addtwo = #{record.addtwo,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="addPostnum" parameterType="java.lang.Integer">
     update games
     set postnum = postnum+1 where id=#{gameid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.software.gameforum.entity.Games">
-    update games
-    <set>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="gamename != null">
-        gamename = #{gamename,jdbcType=VARCHAR},
-      </if>
-      <if test="icon != null">
-        icon = #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null">
-        introduction = #{introduction,jdbcType=VARCHAR},
-      </if>
-      <if test="help != null">
-        help = #{help,jdbcType=VARCHAR},
-      </if>
-      <if test="postnum != null">
-        postnum = #{postnum,jdbcType=INTEGER},
-      </if>
-      <if test="addone != null">
-        addone = #{addone,jdbcType=INTEGER},
-      </if>
-      <if test="addtwo != null">
-        addtwo = #{addtwo,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.software.gameforum.entity.Games">
+    <update id="updateByPrimaryKeySelective" parameterType="com.software.gameforum.entity.Games">
+        update games
+        <set>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="gamename != null">
+                gamename = #{gamename,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="help != null">
+                help = #{help,jdbcType=VARCHAR},
+            </if>
+            <if test="postnum != null">
+                postnum = #{postnum,jdbcType=INTEGER},
+            </if>
+            <if test="addone != null">
+                addone = #{addone,jdbcType=INTEGER},
+            </if>
+            <if test="addtwo != null">
+                addtwo = #{addtwo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.software.gameforum.entity.Games">
     update games
     set url = #{url,jdbcType=VARCHAR},
       gamename = #{gamename,jdbcType=VARCHAR},

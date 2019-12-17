@@ -10,4 +10,8 @@ public interface GameService {
     List<Games> userFollow(int userId);
 
     int addGamePlayed(int userid, int gameid);
+
+    List<Games> gameAndPosts(int step);
+
+    Games getGameByGameId(int gameId);
 }

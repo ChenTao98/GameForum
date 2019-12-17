@@ -23,10 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -195,7 +192,7 @@ public class UserController {
         List<Posts> postsList = postService.getUserPublishedPosts(userId);
         GameForumJSON gameForumJSON = new GameForumJSON();
         gameForumJSON.setSuccessCode();
-        gameForumJSON.put("data", postsListToBeanList(postsList));
+        gameForumJSON.put("data", postsListToBeanList(postsList, request));
         return gameForumJSON.toMyString(true);
     }
 
@@ -205,10 +202,10 @@ public class UserController {
         List<Posts> postsList = postService.getUserFollowPosts(userId);
         GameForumJSON gameForumJSON = new GameForumJSON();
         gameForumJSON.setSuccessCode();
-        gameForumJSON.put("data", postsListToBeanList(postsList));
+        gameForumJSON.put("data", postsListToBeanList(postsList, request));
         return gameForumJSON.toMyString(true);
     }
-    //TODO 我发布的消息接口未完成
+    //TODO 我发布的消息接口未完成,我评论的帖子接口未完成
 
 
     private List<GameBean> gamesListToBeanList(List<Games> list) {
@@ -219,12 +216,35 @@ public class UserController {
         return gameBeanList;
     }
 
-    private List<PostBean> postsListToBeanList(List<Posts> list) {
+    private List<PostBean> postsListToBeanList(List<Posts> list, HttpServletRequest request) {
         List<PostBean> postBeanList = new ArrayList<>();
+        Map<Integer, PostBean> map = new HashMap<>();
         for (Posts post : list) {
-            postBeanList.add(new PostBean(post));
+            PostBean postBean = new PostBean(post);
+            postBeanList.add(postBean);
+            map.put(postBean.getPostid(), postBean);
         }
+        updateStatus(map, request);
         return postBeanList;
+    }
+
+    private void updateStatus(Map<Integer, PostBean> map, HttpServletRequest request) {
+        if (map == null || map.size() == 0) {
+            return;
+        }
+        User user = getUserByRequest(request);
+        List<Posts> postsFollow = postService.getUserFollowPosts(user.getId());
+        List<Posts> postsPraise = postService.getUserPraisePosts(user.getId());
+        for (Posts post : postsFollow) {
+            if (map.containsKey(post.getId())) {
+                map.get(post.getId()).setFollowStatus(1);
+            }
+        }
+        for (Posts post : postsPraise) {
+            if (map.containsKey(post.getId())) {
+                map.get(post.getId()).setPraiseStatus(1);
+            }
+        }
     }
 
     private void removeImage(String imageName) {

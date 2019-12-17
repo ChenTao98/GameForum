@@ -43,4 +43,14 @@ public class GameServiceImpl implements GameService {
             return userplaysgamesDao.insertSelective(userplaysgames);
         }
     }
+
+    @Override
+    public List<Games> gameAndPosts(int step) {
+        return gamesDao.gameAndPosts(step);
+    }
+
+    @Override
+    public Games getGameByGameId(int gameId) {
+        return gamesDao.selectByPrimaryKey(gameId);
+    }
 }

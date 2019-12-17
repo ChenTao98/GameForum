@@ -109,6 +109,13 @@
     select posts.id as id, url, topic, `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum
     from posts left join userfollowposts on posts.id=userfollowposts.postid
     where userfollowposts.userid = #{id,jdbcType=INTEGER}
+    order by `time` desc
+  </select>
+  <select id="selectUserPraise" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select posts.id as id, url, topic, `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum
+    from posts left join userpraiseposts on posts.id=userpraiseposts.postid
+    where userpraiseposts.userid = #{id,jdbcType=INTEGER}
+    order by `time` desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from posts

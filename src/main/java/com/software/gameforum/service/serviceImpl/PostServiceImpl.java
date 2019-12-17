@@ -32,12 +32,27 @@ public class PostServiceImpl implements PostService {
     public List<Posts> getUserPublishedPosts(int userId) {
         PostsExample postsExample = new PostsExample();
         postsExample.createCriteria().andUseridEqualTo(userId);
+        postsExample.setOrderByClause("time desc");
         return postsDao.selectByExample(postsExample);
     }
 
     @Override
     public List<Posts> getUserFollowPosts(int userId) {
         return postsDao.selectUserFollow(userId);
+    }
+
+    @Override
+    public List<Posts> getUserPraisePosts(int userId) {
+        return postsDao.selectUserPraise(userId);
+    }
+
+    @Override
+    public List<Posts> getPostByGameId(int gameId,int step) {
+        PostsExample postsExample=new PostsExample();
+        postsExample.createCriteria().andGameidEqualTo(gameId);
+        postsExample.setLimit(step);
+        postsExample.setOrderByClause("time desc");
+        return postsDao.selectByExample(postsExample);
     }
 
 }

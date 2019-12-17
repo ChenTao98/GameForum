@@ -10,4 +10,6 @@ public interface PostService {
     List<Posts> getUserPublishedPosts(int userId);
 
     List<Posts> getUserFollowPosts(int userId);
+    List<Posts> getUserPraisePosts(int userId);
+    List<Posts> getPostByGameId(int gameId,int step);
 }

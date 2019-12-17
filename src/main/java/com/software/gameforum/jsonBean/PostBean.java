@@ -22,18 +22,40 @@ public class PostBean {
 
     private Integer follownum;
 
+    public Integer getFollowStatus() {
+        return followStatus;
+    }
+
+    public void setFollowStatus(Integer followStatus) {
+        this.followStatus = followStatus;
+    }
+
+    public Integer getPraiseStatus() {
+        return praiseStatus;
+    }
+
+    public void setPraiseStatus(Integer praiseStatus) {
+        this.praiseStatus = praiseStatus;
+    }
+
+    private Integer followStatus = 0;
+
+    private Integer praiseStatus = 0;
+
     public PostBean() {
     }
 
     public PostBean(Posts posts) {
-        this.postid = posts.getId();
-        this.url = PathUtils.POST_URL_PREFIX + postid;
-        this.topic = posts.getTopic();
-        this.time = posts.getTime();
-        this.content = posts.getContent();
-        this.msgnum = posts.getMsgnum();
-        this.praisenum = posts.getPraisenum();
-        this.follownum = posts.getFollownum();
+        if (posts != null) {
+            this.postid = posts.getId();
+            this.url = PathUtils.POST_URL_PREFIX + postid;
+            this.topic = posts.getTopic();
+            this.time = posts.getTime();
+            this.content = posts.getContent();
+            this.msgnum = posts.getMsgnum();
+            this.praisenum = posts.getPraisenum();
+            this.follownum = posts.getFollownum();
+        }
     }
 
     public Integer getPostid() {

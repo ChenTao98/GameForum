@@ -35,4 +35,6 @@ public interface GamesDao {
     int updateByPrimaryKey(Games record);
 
     int addPostnum(Integer gameid);
+
+    List<Games> gameAndPosts(Integer step);
 }

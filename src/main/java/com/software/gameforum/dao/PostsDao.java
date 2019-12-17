@@ -31,4 +31,6 @@ public interface PostsDao {
     int updateByPrimaryKey(Posts record);
 
     List<Posts> selectUserFollow(Integer id);
+
+    List<Posts> selectUserPraise(Integer id);
 }

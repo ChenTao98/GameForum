@@ -6,6 +6,7 @@ import com.software.gameforum.utils.PathUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameBean {
     private Integer gameid;
@@ -22,16 +23,31 @@ public class GameBean {
 
     private Integer postnum;
 
-    private Integer followStatus = 0;
-
-    private Integer praiseStatus = 0;
-
     private List<PostBean> related_posts;
 
     public GameBean() {
     }
 
     public GameBean(Games games) {
+        if (games != null) {
+            this.gameid = games.getId();
+            this.url = games.getUrl();
+            this.gamename = games.getGamename();
+            this.icon = PathUtils.GAME_ICON_PATH_HTML + games.getIcon();
+            this.introduction = games.getIntroduction();
+            this.help = games.getHelp();
+            this.postnum = games.getPostnum();
+            List<Posts> postsList = games.getPosts();
+            if (postsList != null && postsList.size() != 0) {
+                this.related_posts = new ArrayList<>();
+                for (Posts posts : postsList) {
+                    related_posts.add(new PostBean(posts));
+                }
+            }
+        }
+    }
+
+    public GameBean(Games games, Map<Integer, PostBean> map, Integer nPost) {
         this.gameid = games.getId();
         this.url = games.getUrl();
         this.gamename = games.getGamename();
@@ -42,8 +58,13 @@ public class GameBean {
         List<Posts> postsList = games.getPosts();
         if (postsList != null && postsList.size() != 0) {
             this.related_posts = new ArrayList<>();
-            for (Posts posts : postsList) {
-                related_posts.add(new PostBean(posts));
+            int endIndex = nPost == null ? postsList.size() : Math.min(nPost, postsList.size());
+            for (int i = 0; i < endIndex; i++) {
+                PostBean postBean = new PostBean(postsList.get(i));
+                related_posts.add(postBean);
+                if (map != null) {
+                    map.put(postBean.getPostid(), postBean);
+                }
             }
         }
     }
