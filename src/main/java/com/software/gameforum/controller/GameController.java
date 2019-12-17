@@ -1,9 +1,7 @@
 package com.software.gameforum.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.software.gameforum.entity.Games;
-import com.software.gameforum.entity.Posts;
-import com.software.gameforum.entity.User;
+import com.software.gameforum.entity.*;
 import com.software.gameforum.jsonBean.GameBean;
 import com.software.gameforum.jsonBean.PostBean;
 import com.software.gameforum.service.GameService;
@@ -13,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/game")
@@ -65,15 +60,73 @@ public class GameController {
         return gameForumJSON.toMyString(true);
     }
 
+
+    @GetMapping(value = "hotGames", produces = "application/json;charset=UTF-8")
+    public String hotGames(HttpServletRequest request,
+                           @RequestParam(required = false, defaultValue = "3") Integer n) {
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        List<Games> gamesList = gamesService.hotGames(n);
+        Map<Integer, PostBean> map = null;
+        User user = getUserByRequest(request);
+        if (user != null) {
+            map = new HashMap<>();
+        }
+        List<GameBean> gameBeanList = gamesListToBeanList(gamesList, map, null);
+        updateStatus(map, user);
+        gameForumJSON.setSuccessCode();
+        gameForumJSON.put("data", gameBeanList);
+        return gameForumJSON.toMyString(true);
+    }
+
+    @PostMapping(value = "searchPost", produces = "application/json;charset=UTF-8")
+    public String searchPost(@RequestBody() JSONObject jsonObject, HttpServletRequest request) {
+        String searchKey = jsonObject.getString("searchKey");
+        List<Posts> list = postService.searchPost(searchKey);
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        gameForumJSON.setSuccessCode();
+        gameForumJSON.put("data", postsListToBeanList(list, getUserByRequest(request)));
+        return gameForumJSON.toMyString(true);
+    }
+
+    @PostMapping(value = "commentPost", produces = "application/json;charset=UTF-8")
+    public String commentPost(@RequestBody() JSONObject jsonObject, HttpServletRequest request) {
+        int postid = jsonObject.getInteger("postid");
+        String content = jsonObject.getString("messageContent");
+        Message message = new Message();
+        message.setPostid(postid);
+        message.setUserid(getUserByRequest(request).getId());
+        message.setMessagecontent(content);
+        message.setTime(new Date());
+        postService.commentPost(message);
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        gameForumJSON.setSuccessCode();
+        return gameForumJSON.toMyString(true);
+    }
+
+    @PostMapping(value = "replyMessage", produces = "application/json;charset=UTF-8")
+    public String replyMessage(@RequestBody() JSONObject jsonObject, HttpServletRequest request) {
+        int messageId=jsonObject.getInteger("messageid");
+        String content=jsonObject.getString("messageContent");
+        Reply reply=new Reply();
+        reply.setMessageid(messageId);
+        reply.setUserid(getUserByRequest(request).getId());
+        reply.setReplycontent(content);
+        reply.setTime(new Date());
+        postService.replyMessage(reply);
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        gameForumJSON.setSuccessCode();
+        return gameForumJSON.toMyString(true);
+    }
+
     @PostMapping(value = "praisePost", produces = "application/json;charset=UTF-8")
     public String praisePost(@RequestBody() JSONObject jsonObject, HttpServletRequest request) {
-        int postid=jsonObject.getInteger("postid");
-        int userid=getUserByRequest(request).getId();
-        GameForumJSON gameForumJSON=new GameForumJSON();
-        int result=postService.praisePost(postid,userid);
-        if(result==-1){
-            gameForumJSON.setErrorCode(1,"该帖子已点赞");
-        }else {
+        int postid = jsonObject.getInteger("postid");
+        int userid = getUserByRequest(request).getId();
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        int result = postService.praisePost(postid, userid);
+        if (result == -1) {
+            gameForumJSON.setErrorCode(1, "该帖子已点赞");
+        } else {
             gameForumJSON.setSuccessCode();
         }
         return gameForumJSON.toMyString(true);
@@ -81,13 +134,13 @@ public class GameController {
 
     @PostMapping(value = "cancelPraisePost", produces = "application/json;charset=UTF-8")
     public String cancelPraisePost(@RequestBody() JSONObject jsonObject, HttpServletRequest request) {
-        int postid=jsonObject.getInteger("postid");
-        int userid=getUserByRequest(request).getId();
-        GameForumJSON gameForumJSON=new GameForumJSON();
-        int result=postService.cancelPraisePost(postid,userid);
-        if(result==-1){
-            gameForumJSON.setErrorCode(1,"该帖子还未点赞");
-        }else {
+        int postid = jsonObject.getInteger("postid");
+        int userid = getUserByRequest(request).getId();
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        int result = postService.cancelPraisePost(postid, userid);
+        if (result == -1) {
+            gameForumJSON.setErrorCode(1, "该帖子还未点赞");
+        } else {
             gameForumJSON.setSuccessCode();
         }
         return gameForumJSON.toMyString(true);
@@ -95,13 +148,13 @@ public class GameController {
 
     @PostMapping(value = "followPost", produces = "application/json;charset=UTF-8")
     public String followPost(@RequestBody() JSONObject jsonObject, HttpServletRequest request) {
-        int postid=jsonObject.getInteger("postid");
-        int userid=getUserByRequest(request).getId();
-        GameForumJSON gameForumJSON=new GameForumJSON();
-        int result=postService.followPost(postid,userid);
-        if(result==-1){
-            gameForumJSON.setErrorCode(1,"该帖子已收藏");
-        }else {
+        int postid = jsonObject.getInteger("postid");
+        int userid = getUserByRequest(request).getId();
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        int result = postService.followPost(postid, userid);
+        if (result == -1) {
+            gameForumJSON.setErrorCode(1, "该帖子已收藏");
+        } else {
             gameForumJSON.setSuccessCode();
         }
         return gameForumJSON.toMyString(true);
@@ -109,13 +162,13 @@ public class GameController {
 
     @PostMapping(value = "cancelFollowPost", produces = "application/json;charset=UTF-8")
     public String cancelFollowPost(@RequestBody() JSONObject jsonObject, HttpServletRequest request) {
-        int postid=jsonObject.getInteger("postid");
-        int userid=getUserByRequest(request).getId();
-        GameForumJSON gameForumJSON=new GameForumJSON();
-        int result=postService.cancelFollowPost(postid,userid);
-        if(result==-1){
-            gameForumJSON.setErrorCode(1,"该帖子还未收藏");
-        }else {
+        int postid = jsonObject.getInteger("postid");
+        int userid = getUserByRequest(request).getId();
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        int result = postService.cancelFollowPost(postid, userid);
+        if (result == -1) {
+            gameForumJSON.setErrorCode(1, "该帖子还未收藏");
+        } else {
             gameForumJSON.setSuccessCode();
         }
         return gameForumJSON.toMyString(true);

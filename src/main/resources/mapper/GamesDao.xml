@@ -48,6 +48,15 @@
         order by games.id asc,posts.time desc
     </select>
 
+    <select id="hotGames" parameterType="java.lang.Integer" resultMap="GameAndPost">
+        select games.id as id,games.url as url,gamename,icon,introduction,help, postnum,
+        posts.id as postid,posts.url as posturl,topic, `time`, content, userid, gameid, msgnum, praisenum, follownum
+        from games left join posts on games.id=posts.gameid
+        where games.id in
+        (select t.id from (select id,postnum from games order by postnum desc limit #{step,jdbcType=INTEGER}) as t)
+        order by postnum desc ,games.id asc,posts.time desc
+    </select>
+
 
     <sql id="Example_Where_Clause">
         <where>

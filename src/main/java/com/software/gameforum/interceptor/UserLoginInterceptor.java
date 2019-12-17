@@ -19,7 +19,6 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession httpSession = request.getSession(false);
-        LOGGER.debug("开始拦截");
         if (httpSession == null) {
             LOGGER.debug("没有设置session  " + request.getContextPath());
             response.sendRedirect(request.getContextPath() + "/login");

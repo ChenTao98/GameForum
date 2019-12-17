@@ -20,6 +20,16 @@ public class Posts implements Serializable {
 
     private Integer userid;
 
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     private Integer gameid;
 
     private Integer msgnum;

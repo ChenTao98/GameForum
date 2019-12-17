@@ -34,6 +34,8 @@ public interface PostsDao {
 
     List<Posts> selectUserPraise(Integer id);
 
+    List<Posts> selectUserComment(Integer id);
+
     int addPraisenum(Integer postid);
 
     int subPraisenum(Integer postid);

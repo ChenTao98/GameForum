@@ -50,6 +50,11 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public List<Games> hotGames(int step) {
+        return gamesDao.hotGames(step);
+    }
+
+    @Override
     public Games getGameByGameId(int gameId) {
         return gamesDao.selectByPrimaryKey(gameId);
     }

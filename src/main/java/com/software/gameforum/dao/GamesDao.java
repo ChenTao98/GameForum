@@ -37,4 +37,6 @@ public interface GamesDao {
     int addPostnum(Integer gameid);
 
     List<Games> gameAndPosts(Integer step);
+
+    List<Games> hotGames(Integer step);
 }

@@ -205,6 +205,15 @@ public class UserController {
         gameForumJSON.put("data", postsListToBeanList(postsList, request));
         return gameForumJSON.toMyString(true);
     }
+    @GetMapping(value = "postsCommented", produces = "application/json;charset=UTF-8")
+    public String postsComment(HttpServletRequest request) {
+        int userId = getUserByRequest(request).getId();
+        List<Posts> postsList = postService.getUserCommentPosts(userId);
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        gameForumJSON.setSuccessCode();
+        gameForumJSON.put("data", postsListToBeanList(postsList, request));
+        return gameForumJSON.toMyString(true);
+    }
     //TODO 我发布的消息接口未完成,我评论的帖子接口未完成
 
 

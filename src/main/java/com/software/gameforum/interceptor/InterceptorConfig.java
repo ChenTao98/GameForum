@@ -12,7 +12,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(userLoginInterceptor())
                 .addPathPatterns("/api/user/**")
                 .addPathPatterns("/api/game/praisePost","/api/game/cancelPraisePost",
-                        "/api/game/followPost","/api/game/cancelFollowPost");
+                        "/api/game/followPost","/api/game/cancelFollowPost",
+                        "/api/game/commentPost","/api/game/replyMessage");
     }
 
     @Bean

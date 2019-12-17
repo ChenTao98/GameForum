@@ -13,5 +13,7 @@ public interface GameService {
 
     List<Games> gameAndPosts(int step);
 
+    List<Games> hotGames(int step);
+
     Games getGameByGameId(int gameId);
 }

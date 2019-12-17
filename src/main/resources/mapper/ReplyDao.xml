@@ -3,8 +3,8 @@
 <mapper namespace="com.software.gameforum.dao.ReplyDao">
   <resultMap id="BaseResultMap" type="com.software.gameforum.entity.Reply">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
     <result column="messageid" jdbcType="INTEGER" property="messageid" />
-    <result column="replyId" jdbcType="INTEGER" property="replyid" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="replycontent" jdbcType="VARCHAR" property="replycontent" />
     <result column="addone" jdbcType="INTEGER" property="addone" />
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, messageid, replyId, `time`, replycontent, addone, addtwo
+    id, userid, messageid, `time`, replycontent, addone, addtwo
   </sql>
   <select id="selectByExample" parameterType="com.software.gameforum.entity.ReplyExample" resultMap="BaseResultMap">
     select
@@ -110,21 +110,21 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Reply" useGeneratedKeys="true">
-    insert into reply (messageid, replyId, `time`, 
+    insert into reply (userid, messageid, `time`, 
       replycontent, addone, addtwo
       )
-    values (#{messageid,jdbcType=INTEGER}, #{replyid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
+    values (#{userid,jdbcType=INTEGER}, #{messageid,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
       #{replycontent,jdbcType=VARCHAR}, #{addone,jdbcType=INTEGER}, #{addtwo,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.software.gameforum.entity.Reply" useGeneratedKeys="true">
     insert into reply
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
       <if test="messageid != null">
         messageid,
-      </if>
-      <if test="replyid != null">
-        replyId,
       </if>
       <if test="time != null">
         `time`,
@@ -140,11 +140,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
       <if test="messageid != null">
         #{messageid,jdbcType=INTEGER},
-      </if>
-      <if test="replyid != null">
-        #{replyid,jdbcType=INTEGER},
       </if>
       <if test="time != null">
         #{time,jdbcType=TIMESTAMP},
@@ -172,11 +172,11 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
       <if test="record.messageid != null">
         messageid = #{record.messageid,jdbcType=INTEGER},
-      </if>
-      <if test="record.replyid != null">
-        replyId = #{record.replyid,jdbcType=INTEGER},
       </if>
       <if test="record.time != null">
         `time` = #{record.time,jdbcType=TIMESTAMP},
@@ -198,8 +198,8 @@
   <update id="updateByExample" parameterType="map">
     update reply
     set id = #{record.id,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=INTEGER},
       messageid = #{record.messageid,jdbcType=INTEGER},
-      replyId = #{record.replyid,jdbcType=INTEGER},
       `time` = #{record.time,jdbcType=TIMESTAMP},
       replycontent = #{record.replycontent,jdbcType=VARCHAR},
       addone = #{record.addone,jdbcType=INTEGER},
@@ -211,11 +211,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.software.gameforum.entity.Reply">
     update reply
     <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
       <if test="messageid != null">
         messageid = #{messageid,jdbcType=INTEGER},
-      </if>
-      <if test="replyid != null">
-        replyId = #{replyid,jdbcType=INTEGER},
       </if>
       <if test="time != null">
         `time` = #{time,jdbcType=TIMESTAMP},
@@ -234,8 +234,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.software.gameforum.entity.Reply">
     update reply
-    set messageid = #{messageid,jdbcType=INTEGER},
-      replyId = #{replyid,jdbcType=INTEGER},
+    set userid = #{userid,jdbcType=INTEGER},
+      messageid = #{messageid,jdbcType=INTEGER},
       `time` = #{time,jdbcType=TIMESTAMP},
       replycontent = #{replycontent,jdbcType=VARCHAR},
       addone = #{addone,jdbcType=INTEGER},

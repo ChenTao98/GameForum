@@ -10,9 +10,9 @@ import java.util.Date;
 public class Reply implements Serializable {
     private Integer id;
 
-    private Integer messageid;
+    private Integer userid;
 
-    private Integer replyid;
+    private Integer messageid;
 
     private Date time;
 
@@ -32,20 +32,20 @@ public class Reply implements Serializable {
         this.id = id;
     }
 
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
     public Integer getMessageid() {
         return messageid;
     }
 
     public void setMessageid(Integer messageid) {
         this.messageid = messageid;
-    }
-
-    public Integer getReplyid() {
-        return replyid;
-    }
-
-    public void setReplyid(Integer replyid) {
-        this.replyid = replyid;
     }
 
     public Date getTime() {
@@ -93,8 +93,8 @@ public class Reply implements Serializable {
         }
         Reply other = (Reply) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getUserid() == null ? other.getUserid() == null : this.getUserid().equals(other.getUserid()))
             && (this.getMessageid() == null ? other.getMessageid() == null : this.getMessageid().equals(other.getMessageid()))
-            && (this.getReplyid() == null ? other.getReplyid() == null : this.getReplyid().equals(other.getReplyid()))
             && (this.getTime() == null ? other.getTime() == null : this.getTime().equals(other.getTime()))
             && (this.getReplycontent() == null ? other.getReplycontent() == null : this.getReplycontent().equals(other.getReplycontent()))
             && (this.getAddone() == null ? other.getAddone() == null : this.getAddone().equals(other.getAddone()))
@@ -106,8 +106,8 @@ public class Reply implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getUserid() == null) ? 0 : getUserid().hashCode());
         result = prime * result + ((getMessageid() == null) ? 0 : getMessageid().hashCode());
-        result = prime * result + ((getReplyid() == null) ? 0 : getReplyid().hashCode());
         result = prime * result + ((getTime() == null) ? 0 : getTime().hashCode());
         result = prime * result + ((getReplycontent() == null) ? 0 : getReplycontent().hashCode());
         result = prime * result + ((getAddone() == null) ? 0 : getAddone().hashCode());
@@ -122,8 +122,8 @@ public class Reply implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", userid=").append(userid);
         sb.append(", messageid=").append(messageid);
-        sb.append(", replyid=").append(replyid);
         sb.append(", time=").append(time);
         sb.append(", replycontent=").append(replycontent);
         sb.append(", addone=").append(addone);

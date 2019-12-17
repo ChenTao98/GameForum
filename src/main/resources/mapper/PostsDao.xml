@@ -14,6 +14,7 @@
         <result column="follownum" jdbcType="INTEGER" property="follownum"/>
         <result column="addone" jdbcType="INTEGER" property="addone"/>
         <result column="addtwo" jdbcType="VARCHAR" property="addtwo"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
     </resultMap>
 
     <sql id="Example_Where_Clause">
@@ -119,6 +120,13 @@
     from posts left join userpraiseposts on posts.id=userpraiseposts.postid
     where userpraiseposts.userid = #{id,jdbcType=INTEGER}
     order by `time` desc
+  </select>
+    <select id="selectUserComment" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select posts.id as id , url, topic, posts.`time` as `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum
+    from posts left join message on posts.id=message.postid
+    where message.userid = #{id,jdbcType=INTEGER}
+    group by posts.id
+    order by posts.`time` desc
   </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from posts
