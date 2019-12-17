@@ -73,6 +73,8 @@ public class PostBean {
             this.msgnum = posts.getMsgnum();
             this.praisenum = posts.getPraisenum();
             this.follownum = posts.getFollownum();
+            this.userid=posts.getUserid();
+            this.username=posts.getUsername();
         }
     }
 

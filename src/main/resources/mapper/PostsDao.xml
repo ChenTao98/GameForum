@@ -78,16 +78,19 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, url, topic, `time`, content, userid, gameid, msgnum, praisenum, follownum, addone, 
+    id, url, topic, `time`, content, userid, gameid, msgnum, praisenum, follownum, addone,
     addtwo
+  </sql>
+    <sql id="Base_Column_List_With_User">
+    posts.id as id , url, topic, `time`, content, userid, gameid, msgnum, praisenum, follownum, username
   </sql>
     <select id="selectByExample" parameterType="com.software.gameforum.entity.PostsExample" resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
         </if>
-        <include refid="Base_Column_List"/>
-        from posts
+        <include refid="Base_Column_List_With_User"/>
+        from posts left join `user` on posts.userid =`user`.id
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -105,25 +108,25 @@
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from posts
-        where id = #{id,jdbcType=INTEGER}
+        posts.id as id, url, topic, `time`, content, userid, gameid, msgnum, praisenum, follownum,username
+        from posts left join `user` on `user`.id =posts.userid
+        where posts.id = #{id,jdbcType=INTEGER}
     </select>
     <select id="selectUserFollow" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select posts.id as id, url, topic, `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum
-    from posts left join userfollowposts on posts.id=userfollowposts.postid
+    select posts.id as id, url, topic, `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum,username
+    from posts left join userfollowposts on posts.id=userfollowposts.postid left join `user` on `user`.id=posts.userid
     where userfollowposts.userid = #{id,jdbcType=INTEGER}
     order by `time` desc
   </select>
     <select id="selectUserPraise" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select posts.id as id, url, topic, `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum
-    from posts left join userpraiseposts on posts.id=userpraiseposts.postid
+    select posts.id as id, url, topic, `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum,username
+    from posts left join userpraiseposts on posts.id=userpraiseposts.postid left join `user` on `user`.id=posts.userid
     where userpraiseposts.userid = #{id,jdbcType=INTEGER}
     order by `time` desc
   </select>
     <select id="selectUserComment" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select posts.id as id , url, topic, posts.`time` as `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum
-    from posts left join message on posts.id=message.postid
+    select posts.id as id , url, topic, posts.`time` as `time`, content, posts.userid as userid, gameid, msgnum, praisenum, follownum,username
+    from posts left join message on posts.id=message.postid left join `user` on `user`.id=posts.userid
     where message.userid = #{id,jdbcType=INTEGER}
     group by posts.id
     order by posts.`time` desc

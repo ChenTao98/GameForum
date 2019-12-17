@@ -36,13 +36,14 @@
             <result column="follownum" jdbcType="INTEGER" property="follownum"/>
             <result column="addone" jdbcType="INTEGER" property="addone"/>
             <result column="addtwo" jdbcType="VARCHAR" property="addtwo"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
         </collection>
     </resultMap>
 
     <select id="gameAndPosts" parameterType="java.lang.Integer" resultMap="GameAndPost">
         select games.id as id,games.url as url,gamename,icon,introduction,help, postnum,
-        posts.id as postid,posts.url as posturl,topic, `time`, content, userid, gameid, msgnum, praisenum, follownum
-        from games left join posts on games.id=posts.gameid
+        posts.id as postid,posts.url as posturl,topic, `time`, content, userid, gameid, msgnum, praisenum, follownum,username
+        from games left join posts on games.id=posts.gameid left join `user` on `user`.id=posts.userid
         where games.id in
         (select t.id from (select id from games limit #{step,jdbcType=INTEGER}) as t)
         order by games.id asc,posts.time desc
@@ -50,8 +51,8 @@
 
     <select id="hotGames" parameterType="java.lang.Integer" resultMap="GameAndPost">
         select games.id as id,games.url as url,gamename,icon,introduction,help, postnum,
-        posts.id as postid,posts.url as posturl,topic, `time`, content, userid, gameid, msgnum, praisenum, follownum
-        from games left join posts on games.id=posts.gameid
+        posts.id as postid,posts.url as posturl,topic, `time`, content, userid, gameid, msgnum, praisenum, follownum,username
+        from games left join posts on games.id=posts.gameid left join `user` on `user`.id=posts.userid
         where games.id in
         (select t.id from (select id,postnum from games order by postnum desc limit #{step,jdbcType=INTEGER}) as t)
         order by postnum desc ,games.id asc,posts.time desc
