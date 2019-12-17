@@ -3,7 +3,9 @@ package com.software.gameforum.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.software.gameforum.entity.*;
 import com.software.gameforum.jsonBean.GameBean;
+import com.software.gameforum.jsonBean.MessageBean;
 import com.software.gameforum.jsonBean.PostBean;
+import com.software.gameforum.jsonBean.ReplyBean;
 import com.software.gameforum.service.GameService;
 import com.software.gameforum.service.PostService;
 import com.software.gameforum.utils.GameForumJSON;
@@ -60,6 +62,23 @@ public class GameController {
         return gameForumJSON.toMyString(true);
     }
 
+    @GetMapping(value = "postRelatedMsg/{postid}", produces = "application/json;charset=UTF-8")
+    public String postRelatedMsg(@PathVariable() int postid, HttpServletRequest request) {
+        List<Message> list = postService.getMessageByPostId(postid);
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        gameForumJSON.setSuccessCode();
+        gameForumJSON.put("data", messageListToBeanList(list));
+        return gameForumJSON.toMyString(true);
+    }
+
+    @GetMapping(value = "msgSeries/{msgid}", produces = "application/json;charset=UTF-8")
+    public String msgSeries(@PathVariable() int msgid, HttpServletRequest request) {
+        List<Reply> list = postService.getReplyByMessageId(msgid);
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        gameForumJSON.setSuccessCode();
+        gameForumJSON.put("data", replyListToBeanList(list));
+        return gameForumJSON.toMyString(true);
+    }
 
     @GetMapping(value = "hotGames", produces = "application/json;charset=UTF-8")
     public String hotGames(HttpServletRequest request,
@@ -105,9 +124,9 @@ public class GameController {
 
     @PostMapping(value = "replyMessage", produces = "application/json;charset=UTF-8")
     public String replyMessage(@RequestBody() JSONObject jsonObject, HttpServletRequest request) {
-        int messageId=jsonObject.getInteger("messageid");
-        String content=jsonObject.getString("messageContent");
-        Reply reply=new Reply();
+        int messageId = jsonObject.getInteger("messageid");
+        String content = jsonObject.getString("messageContent");
+        Reply reply = new Reply();
         reply.setMessageid(messageId);
         reply.setUserid(getUserByRequest(request).getId());
         reply.setReplycontent(content);
@@ -192,6 +211,22 @@ public class GameController {
         }
         updateStatus(map, user);
         return postBeanList;
+    }
+
+    private List<MessageBean> messageListToBeanList(List<Message> list) {
+        List<MessageBean> beanList = new ArrayList<>();
+        for (Message message : list) {
+            beanList.add(new MessageBean(message));
+        }
+        return beanList;
+    }
+
+    private List<ReplyBean> replyListToBeanList(List<Reply> list) {
+        List<ReplyBean> beanList = new ArrayList<>();
+        for (Reply reply : list) {
+            beanList.add(new ReplyBean(reply));
+        }
+        return beanList;
     }
 
     private void updateStatus(Map<Integer, PostBean> map, User user) {

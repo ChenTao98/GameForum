@@ -1,12 +1,10 @@
 package com.software.gameforum.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.software.gameforum.entity.Games;
-import com.software.gameforum.entity.Posts;
-import com.software.gameforum.entity.User;
-import com.software.gameforum.entity.Userfollowgames;
+import com.software.gameforum.entity.*;
 import com.software.gameforum.interceptor.UserLoginInterceptor;
 import com.software.gameforum.jsonBean.GameBean;
+import com.software.gameforum.jsonBean.MessageBean;
 import com.software.gameforum.jsonBean.PostBean;
 import com.software.gameforum.jsonBean.UserBean;
 import com.software.gameforum.service.GameService;
@@ -196,6 +194,16 @@ public class UserController {
         return gameForumJSON.toMyString(true);
     }
 
+    @GetMapping(value = "msgPublished", produces = "application/json;charset=UTF-8")
+    public String msgPublished(HttpServletRequest request) {
+        int userId = getUserByRequest(request).getId();
+        List<Message> list=postService.getMessageByUserId(userId);
+        GameForumJSON gameForumJSON = new GameForumJSON();
+        gameForumJSON.setSuccessCode();
+        gameForumJSON.put("data", messageListToBeanList(list));
+        return gameForumJSON.toMyString(true);
+    }
+
     @GetMapping(value = "postsFollowed", produces = "application/json;charset=UTF-8")
     public String postsFollowed(HttpServletRequest request) {
         int userId = getUserByRequest(request).getId();
@@ -214,7 +222,6 @@ public class UserController {
         gameForumJSON.put("data", postsListToBeanList(postsList, request));
         return gameForumJSON.toMyString(true);
     }
-    //TODO 我发布的消息接口未完成,我评论的帖子接口未完成
 
 
     private List<GameBean> gamesListToBeanList(List<Games> list) {
@@ -224,7 +231,13 @@ public class UserController {
         }
         return gameBeanList;
     }
-
+    private List<MessageBean> messageListToBeanList(List<Message> list) {
+        List<MessageBean> beanList = new ArrayList<>();
+        for (Message message : list) {
+            beanList.add(new MessageBean(message));
+        }
+        return beanList;
+    }
     private List<PostBean> postsListToBeanList(List<Posts> list, HttpServletRequest request) {
         List<PostBean> postBeanList = new ArrayList<>();
         Map<Integer, PostBean> map = new HashMap<>();

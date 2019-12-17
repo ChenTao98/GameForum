@@ -168,4 +168,19 @@ public class PostServiceImpl implements PostService {
     public int replyMessage(Reply reply) {
         return replyDao.insertSelective(reply);
     }
+
+    @Override
+    public List<Message> getMessageByPostId(int postId) {
+        return messageDao.selectByPostId(postId);
+    }
+
+    @Override
+    public List<Message> getMessageByUserId(int userId) {
+        return messageDao.selectByUserId(userId);
+    }
+
+    @Override
+    public List<Reply> getReplyByMessageId(int messageId) {
+        return replyDao.selectByMessageId(messageId);
+    }
 }

@@ -2,7 +2,9 @@ package com.software.gameforum.dao;
 
 import com.software.gameforum.entity.Message;
 import com.software.gameforum.entity.MessageExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface MessageDao {
@@ -19,6 +21,10 @@ public interface MessageDao {
     List<Message> selectByExample(MessageExample example);
 
     Message selectByPrimaryKey(Integer id);
+
+    List<Message> selectByPostId(Integer id);
+
+    List<Message> selectByUserId(Integer id);
 
     int updateByExampleSelective(@Param("record") Message record, @Param("example") MessageExample example);
 

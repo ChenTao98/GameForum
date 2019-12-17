@@ -36,4 +36,10 @@ public interface PostService {
     int commentPost(Message message);
 
     int replyMessage(Reply reply);
+
+    List<Message> getMessageByPostId(int postId);
+
+    List<Message> getMessageByUserId(int userId);
+
+    List<Reply> getReplyByMessageId(int messageId);
 }

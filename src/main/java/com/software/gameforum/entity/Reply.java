@@ -21,6 +21,24 @@ public class Reply implements Serializable {
     private Integer addone;
 
     private String addtwo;
+    private String username;
+    private String headpic;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getHeadpic() {
+        return headpic;
+    }
+
+    public void setHeadpic(String headpic) {
+        this.headpic = headpic;
+    }
 
     private static final long serialVersionUID = 1L;
 
