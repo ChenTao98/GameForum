@@ -23,6 +23,15 @@ public class PostBean {
     private Integer follownum;
     private String username;
     private Integer userid;
+    private String headpic;
+
+    public String getHeadpic() {
+        return headpic;
+    }
+
+    public void setHeadpic(String headpic) {
+        this.headpic = headpic;
+    }
 
     public String getUsername() {
         return username;
@@ -75,6 +84,7 @@ public class PostBean {
             this.follownum = posts.getFollownum();
             this.userid=posts.getUserid();
             this.username=posts.getUsername();
+            this.headpic=PathUtils.USER_HEAD_PIC_PATH_HTML+posts.getHeadpic();
         }
     }
 

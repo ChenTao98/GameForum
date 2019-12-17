@@ -21,6 +21,15 @@ public class Posts implements Serializable {
     private Integer userid;
 
     private String username;
+    private String headpic;
+
+    public String getHeadpic() {
+        return headpic;
+    }
+
+    public void setHeadpic(String headpic) {
+        this.headpic = headpic;
+    }
 
     public String getUsername() {
         return username;
