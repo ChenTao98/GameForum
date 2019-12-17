@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2019-12-16 13:53:56
+-- 生成日期： 2019-12-17 12:53:03
 -- 服务器版本： 10.1.36-MariaDB
 -- PHP 版本： 7.2.11
 
@@ -65,6 +65,20 @@ CREATE TABLE `message` (
   `addtwo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- 转存表中的数据 `message`
+--
+
+INSERT INTO `message` (`id`, `userid`, `postid`, `time`, `messageContent`, `addone`, `addtwo`) VALUES
+(1, 1, 1, '2019-12-17 16:58:48', '垃圾游戏，回我青春', NULL, NULL),
+(2, 1, 7, '2019-12-17 16:59:18', '垃圾游戏，回我青春', NULL, NULL),
+(3, 1, 3, '2019-12-17 16:59:23', '垃圾游戏，回我青春', NULL, NULL),
+(4, 1, 7, '2019-12-17 16:59:51', '垃圾游戏，回我青春，emmmm', NULL, NULL),
+(5, 1, 7, '2019-12-17 17:16:51', '垃圾游戏，回我青春，emmmm，123123', NULL, NULL),
+(6, 1, 7, '2019-12-17 17:38:30', '垃圾游戏，回我青春，emmmm，123123', NULL, NULL),
+(7, 1, 6, '2019-12-17 17:38:55', '垃圾游戏，回我青春，emmmm，123123', NULL, NULL),
+(8, 1, 6, '2019-12-17 17:39:03', '垃圾游戏，回我青春，emmmm，123123', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -91,13 +105,13 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `url`, `topic`, `time`, `content`, `userid`, `gameid`, `msgnum`, `praisenum`, `follownum`, `addone`, `addtwo`) VALUES
-(1, 'need to be replace', '王者荣耀', '2019-12-16 20:12:16', '这个游戏真垃圾', 1, 1, 0, 0, 0, NULL, NULL),
+(1, 'need to be replace', '王者荣耀', '2019-12-16 20:12:16', '这个游戏真垃圾', 1, 1, 1, 0, 2, NULL, NULL),
 (2, 'need to be replace', '王者荣耀', '2019-12-16 20:12:54', '这个游戏真好玩', 1, 1, 0, 0, 0, NULL, NULL),
-(3, 'need to be replace', '王者荣耀', '2019-12-16 20:12:55', '这个游戏真好玩', 1, 1, 0, 0, 0, NULL, NULL),
+(3, 'need to be replace', '王者荣耀', '2019-12-16 20:12:55', '这个游戏真好玩', 1, 1, 1, 0, 0, NULL, NULL),
 (4, 'need to be replace', '刺激战场', '2019-12-16 20:39:57', '这个游戏真好玩', 2, 2, 0, 0, 0, NULL, NULL),
-(5, 'need to be replace', '刺激战场', '2019-12-16 20:40:10', '这个游戏真垃圾', 2, 2, 0, 0, 0, NULL, NULL),
-(6, 'need to be replace', '刺激战场', '2019-12-16 20:49:46', '这个游戏真香', 1, 2, 0, 0, 0, NULL, NULL),
-(7, 'need to be replace', '刺激战场', '2019-12-16 20:50:09', '这个游戏真香啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', 1, 2, 0, 0, 0, NULL, NULL);
+(5, 'need to be replace', '刺激战场', '2019-12-16 20:40:10', '这个游戏真垃圾', 2, 2, 0, 1, 1, NULL, NULL),
+(6, 'need to be replace', '刺激战场', '2019-12-16 20:49:46', '这个游戏真香', 1, 2, 2, 0, 1, NULL, NULL),
+(7, 'need to be replace', '刺激战场', '2019-12-16 20:50:09', '这个游戏真香啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', 1, 2, 4, 2, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -107,13 +121,22 @@ INSERT INTO `posts` (`id`, `url`, `topic`, `time`, `content`, `userid`, `gameid`
 
 CREATE TABLE `reply` (
   `id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
   `messageid` int(11) NOT NULL,
-  `replyId` int(11) NOT NULL,
   `time` datetime DEFAULT NULL,
   `replycontent` varchar(1023) DEFAULT NULL,
   `addone` int(11) DEFAULT NULL,
   `addtwo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `reply`
+--
+
+INSERT INTO `reply` (`id`, `userid`, `messageid`, `time`, `replycontent`, `addone`, `addtwo`) VALUES
+(1, 1, 1, '2019-12-17 17:00:55', '友军友军', NULL, NULL),
+(2, 1, 1, '2019-12-17 19:03:14', '友军友军，我顶', NULL, NULL),
+(3, 2, 1, '2019-12-17 19:03:38', '友军友军，我顶', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -157,7 +180,10 @@ CREATE TABLE `userfollowgames` (
 
 INSERT INTO `userfollowgames` (`gameid`, `userid`) VALUES
 (1, 1),
-(2, 1);
+(2, 1),
+(3, 1),
+(6, 1),
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -176,8 +202,11 @@ CREATE TABLE `userfollowposts` (
 
 INSERT INTO `userfollowposts` (`postid`, `userid`) VALUES
 (1, 1),
-(2, 1),
-(3, 1);
+(1, 2),
+(7, 2),
+(6, 2),
+(5, 1),
+(7, 1);
 
 -- --------------------------------------------------------
 
@@ -226,6 +255,15 @@ CREATE TABLE `userpraiseposts` (
   `userid` int(11) NOT NULL,
   `postid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `userpraiseposts`
+--
+
+INSERT INTO `userpraiseposts` (`userid`, `postid`) VALUES
+(2, 7),
+(1, 5),
+(1, 7);
 
 --
 -- 转储表的索引
@@ -281,7 +319,7 @@ ALTER TABLE `games`
 -- 使用表AUTO_INCREMENT `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- 使用表AUTO_INCREMENT `posts`
@@ -293,7 +331,7 @@ ALTER TABLE `posts`
 -- 使用表AUTO_INCREMENT `reply`
 --
 ALTER TABLE `reply`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- 使用表AUTO_INCREMENT `user`
