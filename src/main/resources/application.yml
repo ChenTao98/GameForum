@@ -34,8 +34,9 @@ spring:
 #    timeout: 5000ms
   resources:
 # 开发环境
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:F:/gameforum/
-
+#    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:F:/gameforum/
+#部署环境
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:/home/gameforum/
 
 mybatis:
   type-aliases-package: com.software.gameforum.entity
@@ -44,6 +45,6 @@ logging:
   level:
     com.software.gameforum.dao: DEBUG
     com.software.gameforum.*: DEBUG
-# 部署环境
+
 server:
   port: 19999

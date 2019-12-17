@@ -19,7 +19,8 @@
         data["username"] = document.getElementById("username").value;
         data["password"] = document.getElementById("password").value;
         $.ajax({
-            url: "http://localhost:19999/api/login",
+            // url: "http://localhost:19999/api/login",
+            url: "http://47.100.106.153:19999/api/login",
             type: "POST",
             datatype: "json",
             contentType: 'application/json;charset=UTF-8',

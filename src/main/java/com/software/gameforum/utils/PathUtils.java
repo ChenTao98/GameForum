@@ -7,6 +7,7 @@ public class PathUtils {
 //    final public static String USER_HEAD_PIC_PATH = DIR_PATH + "image\\user\\";
 //    final public static String GAME_ICON_PATH = DIR_PATH + "image\\game\\";
 
+
     //部署环境
     final private static String HOST_PATH = "http://47.100.106.153:19999";
     final private static String DIR_PATH = "/home/gameforum/";
