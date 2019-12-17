@@ -10,7 +10,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userLoginInterceptor())
-                .addPathPatterns("/api/user/**");
+                .addPathPatterns("/api/user/**")
+                .addPathPatterns("/api/game/praisePost","/api/game/cancelPraisePost",
+                        "/api/game/followPost","/api/game/cancelFollowPost");
     }
 
     @Bean

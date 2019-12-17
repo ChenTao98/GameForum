@@ -2,8 +2,9 @@ package com.software.gameforum.service.serviceImpl;
 
 import com.software.gameforum.dao.GamesDao;
 import com.software.gameforum.dao.PostsDao;
-import com.software.gameforum.entity.Posts;
-import com.software.gameforum.entity.PostsExample;
+import com.software.gameforum.dao.UserfollowpostsDao;
+import com.software.gameforum.dao.UserpraisepostsDao;
+import com.software.gameforum.entity.*;
 import com.software.gameforum.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,10 @@ public class PostServiceImpl implements PostService {
     private PostsDao postsDao;
     @Autowired
     private GamesDao gamesDao;
+    @Autowired
+    private UserpraisepostsDao userpraisepostsDao;
+    @Autowired
+    private UserfollowpostsDao userfollowpostsDao;
 
     @Override
     @Transactional
@@ -47,12 +52,74 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Posts> getPostByGameId(int gameId,int step) {
-        PostsExample postsExample=new PostsExample();
+    public List<Posts> getPostByGameId(int gameId, int step) {
+        PostsExample postsExample = new PostsExample();
         postsExample.createCriteria().andGameidEqualTo(gameId);
         postsExample.setLimit(step);
         postsExample.setOrderByClause("time desc");
         return postsDao.selectByExample(postsExample);
+    }
+
+    @Override
+    @Transactional
+    public int praisePost(int postId, int userId) {
+        UserpraisepostsExample example = new UserpraisepostsExample();
+        example.createCriteria().andPostidEqualTo(postId).andUseridEqualTo(userId);
+        List<Userpraiseposts> list = userpraisepostsDao.selectByExample(example);
+        if (list.size() != 0) {
+            return -1;
+        }
+        Userpraiseposts userpraiseposts = new Userpraiseposts();
+        userpraiseposts.setPostid(postId);
+        userpraiseposts.setUserid(userId);
+        userpraisepostsDao.insert(userpraiseposts);
+        postsDao.addPraisenum(postId);
+        return 1;
+    }
+
+    @Override
+    @Transactional
+    public int cancelPraisePost(int postId, int userId) {
+        UserpraisepostsExample example = new UserpraisepostsExample();
+        example.createCriteria().andPostidEqualTo(postId).andUseridEqualTo(userId);
+        List<Userpraiseposts> list = userpraisepostsDao.selectByExample(example);
+        if (list.size() == 0) {
+            return -1;
+        }
+        userpraisepostsDao.deleteByExample(example);
+        postsDao.subPraisenum(postId);
+        return 1;
+    }
+
+    @Override
+    @Transactional
+    public int followPost(int postId, int userId) {
+        UserfollowpostsExample example=new UserfollowpostsExample();
+        example.createCriteria().andPostidEqualTo(postId).andUseridEqualTo(userId);
+        List<Userfollowposts> list=userfollowpostsDao.selectByExample(example);
+        if(list.size()!=0){
+            return -1;
+        }
+        Userfollowposts userfollowposts=new Userfollowposts();
+        userfollowposts.setPostid(postId);
+        userfollowposts.setUserid(userId);
+        userfollowpostsDao.insert(userfollowposts);
+        postsDao.addFollownum(postId);
+        return 1;
+    }
+
+    @Override
+    @Transactional
+    public int cancelFollowPost(int postId, int userId) {
+        UserfollowpostsExample example=new UserfollowpostsExample();
+        example.createCriteria().andPostidEqualTo(postId).andUseridEqualTo(userId);
+        List<Userfollowposts> list=userfollowpostsDao.selectByExample(example);
+        if(list.size()==0){
+            return -1;
+        }
+        userfollowpostsDao.deleteByExample(example);
+        postsDao.subFollownum(postId);
+        return 1;
     }
 
 }

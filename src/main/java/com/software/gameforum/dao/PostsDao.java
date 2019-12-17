@@ -33,4 +33,14 @@ public interface PostsDao {
     List<Posts> selectUserFollow(Integer id);
 
     List<Posts> selectUserPraise(Integer id);
+
+    int addPraisenum(Integer postid);
+
+    int subPraisenum(Integer postid);
+
+    int addFollownum(Integer postid);
+
+    int subFollownum(Integer postid);
+
+    int addMessagenum(Integer postid);
 }
