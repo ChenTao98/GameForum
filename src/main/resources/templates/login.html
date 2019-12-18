@@ -12,6 +12,7 @@
 
 </form>
 <button id="button">登录</button>
+<button id="my">我的信息</button>
 </body>
 <script>
     document.getElementById("button").onclick = function (ev) {
@@ -24,7 +25,22 @@
             type: "POST",
             datatype: "json",
             contentType: 'application/json;charset=UTF-8',
+            xhrFields: {withCredentials: true},
             data: JSON.stringify(data),
+            success: function () {
+                alert("success");
+            }
+        })
+
+    };
+    document.getElementById("my").onclick = function (ev) {
+        $.ajax({
+            // url: "http://localhost:19999/api/login",
+            url: "http://47.100.106.153:19999/api/user/mine",
+            type: "GET",
+            datatype: "json",
+            contentType: 'application/json;charset=UTF-8',
+            xhrFields: {withCredentials: true},
             success: function () {
                 alert("success");
             }
